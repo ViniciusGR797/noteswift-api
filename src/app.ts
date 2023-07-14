@@ -1,50 +1,41 @@
-import express, { Application } from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import folderRoutes from './routes/folderRoutes';
-import noteRoutes from './routes/noteRoutes';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger/swagger';
+import 'reflect-metadata';
+//import express from 'express';
+import { createExpressServer, useContainer, Action } from 'routing-controllers';
+import { Container } from 'typedi';
+import { routingControllersToSpec } from 'routing-controllers-openapi';
+import { getMetadataArgsStorage } from 'routing-controllers';
+import { join } from 'path';
+import * as swaggerUi from 'swagger-ui-express';
 
-dotenv.config();
+// Controllers
+import { UserController } from './controllers/userController';
 
-class App {
-  public app: Application;
+// Configure routing-controllers to use typedi container
+useContainer(Container);
 
-  constructor() {
-    this.app = express();
-    this.config();
-    this.connectDatabase();
-    this.setupRoutes();
-    this.setupSwagger();
-  }
+// Create express app
+const app = createExpressServer({
+  controllers: [UserController],
+});
 
-  private config(): void {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-  }
+// Generate Swagger spec
+const storage = getMetadataArgsStorage();
+const spec = routingControllersToSpec(storage, {}, {
+  components: {
+    securitySchemes: {
+      jwt: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
+});
 
-  private async connectDatabase(): Promise<void> {
-    try {
-      await mongoose.connect(process.env.MONGODB_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-      });
-      console.log('Connected to the database');
-    } catch (error) {
-      console.error('Failed to connect to the database:', error);
-    }
-  }
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
 
-  private setupRoutes(): void {
-    this.app.use('/api/folders', folderRoutes);
-    this.app.use('/api/notes', noteRoutes);
-  }
-
-  private setupSwagger(): void {
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-  }
-}
-
-export default new App().app;
+// Start the server
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
