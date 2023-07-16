@@ -1,0 +1,58 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Exemplo",
+    "version": "1.0.0",
+    "description": "Uma API de exemplo usando Node.js, MongoDB e Swagger"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Retorna uma lista de usuários",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "name",
+          "email"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API de gerenciamento de usuários"
+    }
+  ]
+}
