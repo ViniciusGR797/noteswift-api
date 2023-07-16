@@ -1,41 +1,41 @@
-import 'reflect-metadata';
-//import express from 'express';
-import { createExpressServer, useContainer, Action } from 'routing-controllers';
-import { Container } from 'typedi';
-import { routingControllersToSpec } from 'routing-controllers-openapi';
-import { getMetadataArgsStorage } from 'routing-controllers';
-import { join } from 'path';
-import * as swaggerUi from 'swagger-ui-express';
+// src/app.ts
 
-// Controllers
-import { UserController } from './controllers/userController';
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import dotenv from 'dotenv';
 
-// Configure routing-controllers to use typedi container
-useContainer(Container);
+import userRoutes from './routes/userRoutes';
+import mongoose from 'mongoose';
 
-// Create express app
-const app = createExpressServer({
-  controllers: [UserController],
-});
+dotenv.config();
 
-// Generate Swagger spec
-const storage = getMetadataArgsStorage();
-const spec = routingControllersToSpec(storage, {}, {
-  components: {
-    securitySchemes: {
-      jwt: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-      },
+const app = express();
+
+// Configurações do MongoDB
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/myapp';
+mongoose.connect(mongoURI);
+
+app.use(express.json());
+
+// Rotas da API
+app.use('/users', userRoutes);
+
+// Configurações do Swagger
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API de Gerenciamento de Anotações Online',
+      version: '1.0.0',
+      description: 'API para gerenciar anotações online',
     },
   },
-});
+  apis: ['./src/routes/*.ts', './src/models/*.ts'],
+};
 
-// Serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-// Start the server
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
-});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+export default app;
