@@ -5,8 +5,8 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Note
- *   description: Rotas para manipulação de anotações
+ *   name: Config
+ *   description: Rotas para manipulação de configurações de usuário
  */
 
 export default router;

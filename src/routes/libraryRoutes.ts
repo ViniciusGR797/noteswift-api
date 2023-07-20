@@ -5,8 +5,8 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Note
- *   description: Rotas para manipulação de anotações
+ *   name: Library
+ *   description: Rotas para manipulação de biblioteca de pastas
  */
 
 export default router;
