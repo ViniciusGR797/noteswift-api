@@ -29,7 +29,30 @@ const swaggerOptions = {
       title: 'API de Gerenciamento de Anotações Online',
       version: '1.0.0',
       description: 'API para gerenciar anotações online',
+      contact: {
+        name: 'Seu Nome',
+        url: 'https://seusite.com',
+        email: 'seuemail@exemplo.com',
+      },
+      license: {
+        name: 'Licença MIT',
+        url: 'https://url-licenca.com',
+      },
     },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Servidor de Desenvolvimento',
+      },
+      {
+        url: 'https://api.suaempresa.com',
+        description: 'Servidor de Homologação',
+      },
+      {
+        url: 'https://api.suaempresa.com',
+        description: 'Servidor de Produção',
+      },
+    ],
   },
   apis: ['./src/routes/*.ts', './src/models/*.ts'],
 };

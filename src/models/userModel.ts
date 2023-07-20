@@ -6,6 +6,12 @@ import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
  *   schemas:
  *     Folder:
  *       type: object
+ *       required:
+ *         - _id
+ *         - name
+ *         - color
+ *         - order
+ *         - notes
  *       properties:
  *         _id:
  *           type: string
@@ -51,6 +57,14 @@ class Folder {
  *   schemas:
  *     Note:
  *       type: object
+ *       required:
+ *         - _id
+ *         - title
+ *         - body
+ *         - style
+ *         - trashed
+ *         - deleted_date
+ *         - update_at
  *       properties:
  *         _id:
  *           type: string
@@ -110,6 +124,12 @@ class Note {
  *   schemas:
  *     UserConfig:
  *       type: object
+ *       required:
+ *         - dark_mode
+ *         - draft_notification
+ *         - archived
+ *         - auto_backup
+ *         - news
  *       properties:
  *         dark_mode:
  *           type: boolean
@@ -155,6 +175,13 @@ class UserConfig {
  *   schemas:
  *     User:
  *       type: object
+ *       required:
+ *         - _id
+ *         - name
+ *         - email
+ *         - pwd
+ *         - library
+ *         - config
  *       properties:
  *         _id:
  *           type: string

@@ -16,9 +16,13 @@ const router = Router();
  * @swagger
  * /users:
  *   get:
- *     summary: Retorna a lista de todos os usuários.
+ *     summary: Lista o usuário logado
+ *     description: Retorna as informações do usuário logado
  *     tags:
  *       - User
+ *     operationId: get_user_me
+ *     security:
+ *       - jwt: []
  *     responses:
  *       200:
  *         description: Lista de usuários retornada com sucesso.
@@ -26,8 +30,10 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
+ *         links: [] 
  *       500:
  *         description: Erro ao buscar os usuários.
+ *         links: []
  */
 router.get('/', getUsers);
 
