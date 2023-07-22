@@ -1,4 +1,4 @@
-import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 /**
  * @swagger
@@ -35,23 +35,31 @@ import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
  *           example: true
  */
 
-class UserConfig {
-    @prop({ required: true })
-    public dark_mode!: boolean;
-  
-    @prop({ required: true })
-    public draft_notification!: boolean;
-  
-    @prop({ required: true })
-    public archived!: boolean;
-  
-    @prop({ required: true })
-    public auto_backup!: boolean;
-  
-    @prop({ required: true })
-    public news!: boolean;
+export interface IUserConfig extends Document {
+    dark_mode: boolean;
+    draft_notification: boolean;
+    archived: boolean;
+    auto_backup: boolean;
+    news: boolean;
 }
 
-const UserConfigModel = getModelForClass(UserConfig);
+const userConfigSchema = new Schema({
+    dark_mode: { type: Boolean, required: true },
+    draft_notification: { type: Boolean, required: true },
+    archived: { type: Boolean, required: true },
+    auto_backup: { type: Boolean, required: true },
+    news: { type: Boolean, required: true },
+});
 
-export { UserConfig, UserConfigModel };
+const UserConfig = mongoose.model<IUserConfig>("UserConfig", userConfigSchema);
+
+// Define a config padrão
+const userConfigDefault = {
+    dark_mode: false,
+    draft_notification: true,
+    archived: true,
+    auto_backup: true,
+    news: true
+};
+
+export { UserConfig, userConfigSchema, userConfigDefault };

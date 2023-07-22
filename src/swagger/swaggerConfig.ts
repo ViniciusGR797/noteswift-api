@@ -35,6 +35,21 @@ const swaggerOptions = {
         url: 'https://github.com/ViniciusGR797/noteswift-api/blob/main/LICENSE',
       },
     },
+    components: {
+      securitySchemes: {
+        jwt: {
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
+          description: "Para autenticar, coloque o token JWT no formato **Bearer _token_**.",
+        },
+      },
+    },
+    security: [
+      {
+        jwt: [],
+      },
+    ],
   },
   apis: ['./src/routes/*.ts', './src/models/*.ts'],
 };

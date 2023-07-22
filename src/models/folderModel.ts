@@ -1,5 +1,6 @@
-import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
-import { Note } from './noteModel';  
+import mongoose, { Schema, Document } from 'mongoose';
+import { ObjectId } from "mongodb";
+import { INote, noteSchema } from './noteModel';
 
 /**
  * @swagger
@@ -36,23 +37,31 @@ import { Note } from './noteModel';
  *             $ref: "#/components/schemas/Note"
  */
 
-class Folder {
-  @prop({ required: true })
-  public _id!: string;
-
-  @prop({ required: true })
-  public name!: string;
-
-  @prop({ required: true })
-  public color!: string;
-
-  @prop({ required: true })
-  public order!: number;
-
-  @prop({ required: true, type: () => [Note] })
-  public notes!: Ref<Note>[];
+export interface IFolder extends Document {
+  _id: string | undefined;
+  name: string;
+  color: string;
+  order: number;
+  notes: INote[];
 }
 
-const FolderModel = getModelForClass(Folder);
+const folderSchema = new Schema({
+  _id: { type: String },
+  name: { type: String, required: true },
+  color: { type: String, required: true },
+  order: { type: Number, required: true },
+  notes: [noteSchema], 
+});
 
-export { Folder, FolderModel };
+const Folder = mongoose.model<IFolder>("Folder", folderSchema);
+
+// Define a folder padrão
+const folderDefault = {
+  _id: new ObjectId().toHexString(),
+  name: "default",
+  color: "#FFFFFF",
+  order: 1,
+  notes: []
+};
+
+export { Folder, folderSchema, folderDefault };

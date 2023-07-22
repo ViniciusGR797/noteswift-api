@@ -1,4 +1,4 @@
-import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 /**
  * @swagger
@@ -45,29 +45,26 @@ import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
  *           example: "2022-01-01"
  */
 
-class Note {
-    @prop({ required: true })
-    public _id!: string;
-  
-    @prop({ required: true })
-    public title!: string;
-  
-    @prop({ required: true })
-    public body!: string;
-  
-    @prop({ required: true })
-    public style!: string;
-  
-    @prop({ required: true })
-    public trashed!: boolean;
-  
-    @prop({ required: true })
-    public deleted_date!: string;
-  
-    @prop({ required: true })
-    public update_at!: string;
+export interface INote extends Document {
+  _id: string | undefined;
+  title: string;
+  body: string;
+  style: string;
+  trashed: boolean;
+  deleted_date: string;
+  update_at: string;
 }
 
-const NoteModel = getModelForClass(Note);
+const noteSchema = new Schema({
+  _id: { type: String },
+  title: { type: String, required: true },
+  body: { type: String, required: true },
+  style: { type: String, required: true },
+  trashed: { type: Boolean, required: true },
+  deleted_date: { type: String, required: true },
+  update_at: { type: String, required: true },
+});
 
-export { Note, NoteModel };
+const Note = mongoose.model<INote>("Note", noteSchema);
+
+export { Note, noteSchema };
