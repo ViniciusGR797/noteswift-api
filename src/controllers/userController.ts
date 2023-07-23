@@ -137,4 +137,29 @@ export class UserController {
     // Retorna o usuário atualizado
     return res.status(200).json(updatedUser);
   }
+
+  static async removeUserMe(req: Request, res: Response): Promise<Response> {
+    // ID do usuário obtido pelo middleware de autenticação
+    const userId = req.userId;
+
+    // Verifica se o usuário existe no banco de dados
+    const { user, error: getUserError } = await UserService.getUserById(userId);
+    if (getUserError) {
+      return res.status(500).json({ msg: getUserError });
+    }
+    if (!user) {
+      return res.status(404).json({ msg: 'Usuário não encontrado' });
+    }
+
+    // Remove o usuário do banco de dados
+    const { deletedUser, error: deleteUserError } = await UserService.deleteUser(userId);
+    if (deleteUserError) {
+      return res.status(500).json({ msg: deleteUserError });
+    }
+
+    // ********** Mandar por email o user deletado (deletedUser)
+
+    // Retorna mensagem de sucesso
+    return res.status(200).json({ msg: 'Excluído com sucesso' });
+  }
 }

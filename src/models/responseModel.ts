@@ -2,6 +2,13 @@
  * @swagger
  * components:
  *   schemas:
+ *     DeleteSuccess:
+ *       type: object
+ *       properties:
+ *         msg:
+ *           type: string
+ *           description: Mensagem de sucesso ao excluir
+ *           example: "Excluído com sucesso"
  *     LoginSuccess:
  *       type: object
  *       properties:

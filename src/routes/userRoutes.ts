@@ -170,6 +170,13 @@ router.post('/login', UserController.loginUser);
  *             schema:
  *               $ref: "#/components/schemas/User"
  *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
@@ -201,5 +208,56 @@ router.post('/login', UserController.loginUser);
  */
 
 router.put('/', authMiddleware, UserController.updateUserMe);
+
+/**
+ * @swagger
+ * /users:
+ *   delete:
+ *     summary: Remove o usuário logado
+ *     description: Apaga da base de dados seu usuário
+ *     tags:
+ *       - User
+ *     operationId: remove_user_me
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/DeleteSuccess"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.delete('/', authMiddleware, UserController.removeUserMe);
 
 export default router;

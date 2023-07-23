@@ -71,20 +71,24 @@ export class UserService {
     }
   }
 
-  // // Função para excluir um usuário do banco de dados
-  // static async deleteUser(userId: string): Promise<void> {
-  //   try {
-  //     const db = getDB();
-  //     const collection = db.collection("users");
+  // Função para remover um usuário
+  static async deleteUser(userId: string): Promise<{ deletedUser: any | null; error: string | null }> {
+    try {
+      const db = getDB();
+      const collection = db.collection('users');
 
-  //     // Converte o ID em ObjectId
-  //     const userObjectId = new ObjectId(userId);
+      // Encontra o usuário no banco de dados pelo ID e o remove
+      const result = await collection.findOneAndDelete({ _id: new ObjectId(userId) });
 
-  //     // Exclui o usuário do banco de dados usando o ID
-  //     await collection.deleteOne({ _id: userObjectId });
-  //   } catch (error) {
-  //     console.error("Error deleting user:", error);
-  //     throw new Error("Error deleting user.");
-  //   }
-  // }
+      // Verifica se o usuário foi encontrado e removido
+      if (!result.value) {
+        return { deletedUser: null, error: 'Erro interno do servidor' };
+      }
+
+      // Retorna o usuário removido
+      return { deletedUser: result.value, error: null };
+    } catch (error) {
+      return { deletedUser: null, error: 'Erro interno do servidor' };
+    }
+  }
 }
