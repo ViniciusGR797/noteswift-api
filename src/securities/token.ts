@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { IUser } from '../models/userModel';
+import config from '../config';
 
 // Chave secreta para assinar o token
-const secretKey = process.env.JWT_SECRET_KEY || 'sua_chave_secreta_padrao';
+const secretKey = config.jwt.secretKey;
 
 export class Token {
   static generateToken(userId: string): string {
-    const expiresIn = process.env.JWT_ACCESS_TOKEN_EXPIRES;
+    const expiresIn = config.jwt.accessTokenExpires;
 
     const payload = {
       id: userId,

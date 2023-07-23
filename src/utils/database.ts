@@ -1,17 +1,12 @@
 import { MongoClient, Db } from 'mongodb';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config';
 
 let client: MongoClient;
 let db: Db;
 
 export async function connectDB() {
   try {
-    const uri = process.env.MONGODB_URI;
-    if (!uri) {
-      throw new Error("MONGODB_URI not defined in the environment variables.");
-    }
+    const uri = config.mongodbUri;
 
     client = await MongoClient.connect(uri);
     db = client.db();

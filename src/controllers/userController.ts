@@ -7,6 +7,7 @@ import { UserService } from '../services/userService';
 import { Password } from '../securities/password';
 import { Token } from '../securities/token'; 
 import { Validate } from '../utils/validate';
+import { sendEmail, EmailOptions, Template  } from '../utils/email';
 
 export class UserController {
   static async getUserMe(req: Request, res: Response): Promise<Response> {
@@ -157,7 +158,13 @@ export class UserController {
       return res.status(500).json({ msg: deleteUserError });
     }
 
-    // ********** Mandar por email o user deletado (deletedUser)
+    const emailOptions: EmailOptions = {
+      to: deletedUser.email,
+      subject: 'Conta do usuário apagada',
+      html: Template.deleteUserTemplate(deletedUser),
+    };
+
+    sendEmail(emailOptions);
 
     // Retorna mensagem de sucesso
     return res.status(200).json({ msg: 'Excluído com sucesso' });
