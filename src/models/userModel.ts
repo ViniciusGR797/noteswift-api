@@ -64,7 +64,7 @@ const User = mongoose.model<IUser>("User", userSchema);
  * @swagger
  * components:
  *   schemas:
- *     UserCreation:
+ *     UpsertUser:
  *       type: object
  *       required:
  *         - name
@@ -85,19 +85,19 @@ const User = mongoose.model<IUser>("User", userSchema);
  *           example: "senha"
  */
 
-export interface IUserCreation extends Document {
+export interface IUpsertUser extends Document {
   name: string;
   email: string;
   pwd: string;
 }
 
-const userCreationSchema = new Schema({
+const upsertUserSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   pwd: { type: String, required: true },
 });
 
-const UserCreation = mongoose.model<IUserCreation>("UserCreation", userCreationSchema);
+const UpsertUser = mongoose.model<IUpsertUser>("UpsertUser", upsertUserSchema);
 
 /**
  * @swagger
@@ -131,4 +131,4 @@ const userLoginSchema = new Schema({
 
 const UserLogin = mongoose.model<IUserLogin>("UserLogin", userLoginSchema);
 
-export { User, UserCreation, UserLogin, userSchema, userCreationSchema, userLoginSchema };
+export { User, UpsertUser, UserLogin, userSchema, upsertUserSchema, userLoginSchema };

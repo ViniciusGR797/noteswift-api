@@ -1,10 +1,10 @@
-import { IUserCreation, UserCreation } from '../models/userModel';
+import { IUpsertUser, UpsertUser } from '../models/userModel';
 
 export class Validate {
-  static async validateUserCreationData(data: IUserCreation): Promise<{ newUser: any | null, error: string | null }> {
-    const newUser = new UserCreation(data);
+  static async validateUpsertUserData(data: IUpsertUser): Promise<{ upsertUser: any | null, error: string | null }> {
+    const upsertUser = new UpsertUser(data);
     try {
-      await newUser.validate();
+      await upsertUser.validate();
 
       // Validação do email usando regex
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -18,14 +18,14 @@ export class Validate {
         throw new Error('Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)');
       }
 
-      const newUserWithoutExtras = {
+      const upsertUserWithoutExtras = {
         name: data.name,
         email: data.email,
         pwd: data.pwd
       };
-      return { newUser: newUserWithoutExtras, error: null };
+      return { upsertUser: upsertUserWithoutExtras, error: null };
     } catch (error: any) {
-      return { newUser: null, error: error.message };
+      return { upsertUser: null, error: error.message };
     }
   }
 }

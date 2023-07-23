@@ -84,12 +84,14 @@ router.get('/', authMiddleware, UserController.getUserMe);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
+ *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
@@ -103,6 +105,7 @@ router.get('/', authMiddleware, UserController.getUserMe);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
  */
 
 router.post('/', UserController.createUser);
@@ -129,19 +132,74 @@ router.post('/', UserController.createUser);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/LoginSuccess"
+ *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/LoginFail"
+ *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
  */
+
 router.post('/login', UserController.loginUser);
+
+/**
+ * @swagger
+ * /users:
+ *   put:
+ *     summary: Atualiza o usuário logado
+ *     description: Atualiza as informações do usuário logado com base nos dados fornecidos no corpo da requisição
+ *     tags:
+ *       - User
+ *     operationId: update_user_me
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/User"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/', authMiddleware, UserController.updateUserMe);
 
 export default router;
