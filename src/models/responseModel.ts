@@ -2,6 +2,20 @@
  * @swagger
  * components:
  *   schemas:
+ *     LoginSuccess:
+ *       type: object
+ *       properties:
+ *         msg:
+ *           type: string
+ *           description: Mensagem de sucesso ao fazer login
+ *           example: "<token>"
+ *     LoginFail:
+ *       type: object
+ *       properties:
+ *         msg:
+ *           type: string
+ *           description: Mensagem de falha ao fazer login
+ *           example: "Credenciais de usuário inválidas"
  *     BadRequest:
  *       type: object
  *       properties:

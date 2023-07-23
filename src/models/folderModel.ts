@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { ObjectId } from "mongodb";
-import { INote, noteSchema } from './noteModel';
+import { INote, noteSchema, noteDefault } from './noteModel';
 
 /**
  * @swagger
@@ -61,7 +61,7 @@ const folderDefault = {
   name: "default",
   color: "#FFFFFF",
   order: 1,
-  notes: []
+  notes: [noteDefault]
 };
 
 export { Folder, folderSchema, folderDefault };

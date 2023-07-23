@@ -18,6 +18,21 @@ export class UserService {
     }
   }
 
+  // Função para buscar o usuário por email no banco de dados
+  static async getUserByEmail(email: string): Promise<{ user: any | null, error: string | null }> {
+    try {
+      const db = getDB();
+      const collection = db.collection("users");
+      const user = await collection.findOne({ email });
+
+      return { user, error: null };
+      
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return { user: null, error: "Erro interno do servidor" };
+    }
+  }
+
   static async createUser(data: any): Promise<{ createdUserID: string; error: string | null }> {
     try {
       const db = getDB();
@@ -28,8 +43,6 @@ export class UserService {
   
       // Retorna o _id do usuário cadastrado
       const createdUserID = result.insertedId.toString();
-  
-      console.log(createdUserID);
   
       return { createdUserID, error: null };
     } catch (error) {

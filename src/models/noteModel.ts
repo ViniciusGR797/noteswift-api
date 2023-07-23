@@ -1,4 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
+import { ObjectId } from "mongodb";
+import moment from 'moment-timezone';
 
 /**
  * @swagger
@@ -38,11 +40,11 @@ import mongoose, { Schema, Document } from 'mongoose';
  *         deleted_date:
  *           type: string
  *           description: Data de exclusão da nota
- *           example: "2022-01-01"
+ *           example: "2022-01-01 10:30:00"
  *         update_at:
  *           type: string
  *           description: Data de atualização da nota
- *           example: "2022-01-01"
+ *           example: "2022-01-01 10:30:00"
  */
 
 export interface INote extends Document {
@@ -67,4 +69,15 @@ const noteSchema = new Schema({
 
 const Note = mongoose.model<INote>("Note", noteSchema);
 
-export { Note, noteSchema };
+// Define a note padrão
+const noteDefault = {
+  _id: new ObjectId().toHexString(),
+  title: 'Título da anotação',
+  body: 'Texto da anotação',
+  style: '',
+  trashed: false,
+  deleted_date: '',
+  update_at: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'),
+};
+
+export { Note, noteSchema, noteDefault };

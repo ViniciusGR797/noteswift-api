@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/userController';
+import { authMiddleware } from '../middlewares/auth';
 
 const router = Router();
 
@@ -23,18 +24,25 @@ const router = Router();
  *       - jwt: []
  *     responses:
  *       200:
- *         description: Lista de usuários retornada com sucesso.
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
  *         links: [] 
- *       400:
- *         description: BadRequest
+ *       401:
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: "#/components/schemas/BadRequest"
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
  *         links: [] 
  *       404:
  *         description: NotFound
@@ -52,8 +60,7 @@ const router = Router();
  *         links: [] 
  */
 
-// router.get('/', UserController.getUserMe);
-router.get('/:user_id', UserController.getUserMe);
+router.get('/', authMiddleware, UserController.getUserMe);
 
 /**
  * @swagger
@@ -83,6 +90,13 @@ router.get('/:user_id', UserController.getUserMe);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
@@ -92,5 +106,42 @@ router.get('/:user_id', UserController.getUserMe);
  */
 
 router.post('/', UserController.createUser);
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Faz login do usuário
+ *     description: Autentica o usuário com base no email e senha fornecidos no corpo da requisição.
+ *     tags:
+ *       - User
+ *     operationId: login_user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/UserLogin"
+ *     responses:
+ *       200:
+ *         description: Usuário autenticado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/LoginSuccess"
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/LoginFail"
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ */
+router.post('/login', UserController.loginUser);
 
 export default router;
