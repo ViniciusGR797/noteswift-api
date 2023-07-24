@@ -61,7 +61,7 @@ export class UserService {
 
       // Verifica se o usuário foi encontrado e atualizado
       if (!result.value) {
-        return { updatedUser: null, error: 'Erro interno do servidor' };
+        return { updatedUser: null, error: null };
       }
 
       // Retorna o usuário atualizado
@@ -82,7 +82,7 @@ export class UserService {
 
       // Verifica se o usuário foi encontrado e removido
       if (!result.value) {
-        return { deletedUser: null, error: 'Erro interno do servidor' };
+        return { deletedUser: null, error: null };
       }
 
       // Retorna o usuário removido

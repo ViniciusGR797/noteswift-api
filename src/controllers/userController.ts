@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
-
 import { folderDefault } from '../models/folderModel';
 import { userConfigDefault } from '../models/userConfigModel';
 import { UserService } from '../services/userService';
@@ -101,7 +99,7 @@ export class UserController {
       return res.status(500).json({ msg: getUserError });
     }
     if (!user) {
-      return res.status(404).json({ msg: 'Usuário não encontrado' });
+      return res.status(404).json({ msg: 'Nenhum dado encontrado' });
     }
 
     // Valida o payload do usuário atualizado antes de prosseguir
@@ -143,19 +141,13 @@ export class UserController {
     // ID do usuário obtido pelo middleware de autenticação
     const userId = req.userId;
 
-    // Verifica se o usuário existe no banco de dados
-    const { user, error: getUserError } = await UserService.getUserById(userId);
-    if (getUserError) {
-      return res.status(500).json({ msg: getUserError });
-    }
-    if (!user) {
-      return res.status(404).json({ msg: 'Usuário não encontrado' });
-    }
-
     // Remove o usuário do banco de dados
     const { deletedUser, error: deleteUserError } = await UserService.deleteUser(userId);
     if (deleteUserError) {
       return res.status(500).json({ msg: deleteUserError });
+    }
+    if (!deletedUser) {
+      return res.status(404).json({ msg: 'Nenhum dado encontrado' });
     }
 
     const emailOptions: EmailOptions = {

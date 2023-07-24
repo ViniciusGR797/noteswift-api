@@ -19,11 +19,11 @@ connectDB();
 app.use(express.json());
 
 // Rotas da API
-app.use('/bin', binRoutes);
-app.use('/folder', folderRoutes);
-app.use('/library', libraryRoutes);
-app.use('/note', noteRoutes);
-app.use('/config', userConfigRoutes);
+app.use('/bins', binRoutes);
+app.use('/folders', folderRoutes);
+app.use('/libraries', libraryRoutes);
+app.use('/notes', noteRoutes);
+app.use('/configs', userConfigRoutes);
 app.use('/users', userRoutes);
 
 // Configurações do Swagger

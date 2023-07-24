@@ -6,11 +6,22 @@ import { INote, noteSchema, noteDefault } from './noteModel';
  * @swagger
  * components:
  *   schemas:
+ *     Library:
+ *       type: array
+ *       items:
+ *         $ref: "#/components/schemas/Folder"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
  *     Folder:
  *       type: object
  *       required:
  *         - _id
  *         - name
+ *         - is_default
  *         - color
  *         - order
  *         - notes
@@ -23,6 +34,10 @@ import { INote, noteSchema, noteDefault } from './noteModel';
  *           type: string
  *           description: Nome da pasta
  *           example: "Nome da pasta"
+ *         is_default:
+ *           type: string
+ *           description: Marcação da pasta default (não pode ser apagada)
+ *           example: true
  *         color:
  *           type: string
  *           description: Cor da pasta
@@ -40,6 +55,7 @@ import { INote, noteSchema, noteDefault } from './noteModel';
 export interface IFolder extends Document {
   _id: string | undefined;
   name: string;
+  is_default: boolean;
   color: string;
   order: number;
   notes: INote[];
@@ -48,6 +64,7 @@ export interface IFolder extends Document {
 const folderSchema = new Schema({
   _id: { type: String },
   name: { type: String, required: true },
+  is_default: { type: Boolean, required: true },
   color: { type: String, required: true },
   order: { type: Number, required: true },
   notes: [noteSchema], 
@@ -59,6 +76,7 @@ const Folder = mongoose.model<IFolder>("Folder", folderSchema);
 const folderDefault = {
   _id: new ObjectId().toHexString(),
   name: "default",
+  is_default: true,
   color: "#FFFFFF",
   order: 1,
   notes: [noteDefault]
