@@ -49,14 +49,43 @@ export interface IUser extends Document {
   config: IUserConfig;
 }
 
-const userSchema = new Schema({
-  _id: { type: String },
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  pwd: { type: String, required: true },
-  library: [folderSchema], 
-  config: { type: userConfigSchema, required: true },
-});
+const userSchema = new Schema(
+  {
+    _id: { 
+      type: String,
+      required: true,
+    },
+    name: { 
+      type: String, 
+      required: true,
+      trim: true
+    },
+    email: { 
+      type: String, 
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        'Email inválido'
+      ]
+    },
+    pwd: { 
+      type: String, 
+      required: true,
+      match: [
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)'
+      ]
+    },
+    library: [folderSchema], 
+    config: { 
+      type: userConfigSchema, 
+      required: true 
+    },
+  }
+);
 
 const User = mongoose.model<IUser>("User", userSchema);
 
@@ -91,11 +120,36 @@ export interface IUpsertUser extends Document {
   pwd: string;
 }
 
-const upsertUserSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  pwd: { type: String, required: true },
-});
+const upsertUserSchema = new Schema(
+  {
+    name: { 
+      type: String, 
+      required: true,
+      trim: true
+    },
+    email: { 
+      type: String, 
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          'Email inválido'
+      ]
+    },
+    pwd: { 
+      type: String, 
+      required: true,
+      match: [
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)'
+      ]
+    },
+  },{ 
+    _id: false 
+  }
+);
 
 const UpsertUser = mongoose.model<IUpsertUser>("UpsertUser", upsertUserSchema);
 
@@ -124,10 +178,31 @@ export interface IUserLogin extends Document {
   pwd: string;
 }
 
-const userLoginSchema = new Schema({
-  email: { type: String, required: true },
-  pwd: { type: String, required: true },
-});
+const userLoginSchema = new Schema(
+  {
+    email: { 
+      type: String, 
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          'Email inválido'
+      ]
+    },
+    pwd: { 
+      type: String, 
+      required: true,
+      match: [
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)'
+      ]
+    },
+  },{ 
+    _id: false 
+  }
+);
 
 const UserLogin = mongoose.model<IUserLogin>("UserLogin", userLoginSchema);
 

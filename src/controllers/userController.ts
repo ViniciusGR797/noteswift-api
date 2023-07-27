@@ -6,6 +6,7 @@ import { Password } from '../securities/password';
 import { Token } from '../securities/token'; 
 import { Validate } from '../utils/validate';
 import { sendEmail, EmailOptions, Template  } from '../utils/email';
+import { UpsertUser } from '../models/userModel';
 
 export class UserController {
   static async getUserMe(req: Request, res: Response): Promise<Response> {
@@ -24,14 +25,18 @@ export class UserController {
   }
 
   static async createUser(req: Request, res: Response): Promise<Response> {
+    const payload = new UpsertUser(req.body);
+
     // Valida o payload do novo usuário antes de prosseguir
-    const { upsertUser, error: payloadError } = await Validate.validateUpsertUserData(req.body);
+    const { data, error: payloadError } = await Validate.validateData(payload);
     if (payloadError) {
       return res.status(400).json({ msg: payloadError });
     }
 
+    console.log("Passou")
+
     // Verifica se o email já existe no banco de dados (garante que seja único)
-    const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(upsertUser.email);
+    const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(data.email);
     if (getUserEmailError) {
       return res.status(500).json({ msg: getUserEmailError });
     }
@@ -40,14 +45,14 @@ export class UserController {
     }
 
     // Popula payload
-    upsertUser.library = [folderDefault];
-    upsertUser.config = userConfigDefault;
+    data.library = [folderDefault];
+    data.config = userConfigDefault;
 
     // Criptografa a senha antes de salvar o usuário no banco de dados
-    upsertUser.pwd = await Password.hashPassword(upsertUser.pwd);
+    data.pwd = await Password.hashPassword(data.pwd);
 
     // Cria o novo usuário
-    const { createdUserID, error: createUserError } = await UserService.createUser(upsertUser);
+    const { createdUserID, error: createUserError } = await UserService.createUser(data);
     if (createUserError) {
       return res.status(500).json({ msg: createUserError });
     }
@@ -103,14 +108,14 @@ export class UserController {
     }
 
     // Valida o payload do usuário atualizado antes de prosseguir
-    const { upsertUser, error: payloadError } = await Validate.validateUpsertUserData(req.body);
+    const { data, error: payloadError } = await Validate.validateData(req.body);
     if (payloadError) {
       return res.status(400).json({ msg: payloadError });
     }
 
     // Verifica se o email já existe no banco de dados, exceto se for o email atual do usuário
-    if (upsertUser.email !== user.email) {
-      const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(upsertUser.email);
+    if (data.email !== user.email) {
+      const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(data.email);
       if (getUserEmailError) {
         return res.status(500).json({ msg: getUserEmailError });
       }
@@ -120,12 +125,12 @@ export class UserController {
     }  
 
     // Criptografa a senha antes de salvar o usuário no banco de dados
-    upsertUser.pwd = await Password.hashPassword(upsertUser.pwd);
+    data.pwd = await Password.hashPassword(data.pwd);
 
     // Mantém o valor anterior se não fornecer um novo nome, email ou senha
-    user.name = upsertUser.name || user.name; 
-    user.email = upsertUser.email || user.email; 
-    user.pwd = upsertUser.pwd || user.pwd;
+    user.name = data.name || user.name; 
+    user.email = data.email || user.email; 
+    user.pwd = data.pwd || user.pwd;
 
     // Salva as alterações no banco de dados
     const { updatedUser, error: updateUserError } = await UserService.updateUser(userId, user);

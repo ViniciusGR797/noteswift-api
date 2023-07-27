@@ -43,13 +43,42 @@ export interface IUserConfig extends Document {
     news: boolean;
 }
 
-const userConfigSchema = new Schema({
-    dark_mode: { type: Boolean, required: true },
-    draft_notification: { type: Boolean, required: true },
-    archived: { type: Boolean, required: true },
-    auto_backup: { type: Boolean, required: true },
-    news: { type: Boolean, required: true },
-});
+const userConfigSchema = new Schema<IUserConfig>(
+    {
+        dark_mode: { 
+            type: Boolean, 
+            required: true, 
+            lowercase: true, 
+            trim: true 
+        },
+        draft_notification: { 
+            type: Boolean, 
+            required: true, 
+            lowercase: true, 
+            trim: true 
+        },
+        archived: { 
+            type: Boolean, 
+            required: true, 
+            lowercase: true, 
+            trim: true 
+        },
+        auto_backup: { 
+            type: Boolean, 
+            required: true, 
+            lowercase: true, 
+            trim: true 
+        },
+        news: { 
+            type: Boolean, 
+            required: true, 
+            lowercase: true, 
+            trim: true 
+        },
+    },{ 
+        _id: false 
+    }
+);
 
 const UserConfig = mongoose.model<IUserConfig>("UserConfig", userConfigSchema);
 

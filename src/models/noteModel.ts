@@ -58,13 +58,52 @@ export interface INote extends Document {
 }
 
 const noteSchema = new Schema({
-  _id: { type: String },
-  title: { type: String, required: true },
-  body: { type: String, required: true },
-  style: { type: String, required: true },
-  trashed: { type: Boolean, required: true },
-  deleted_date: { type: String, required: true },
-  update_at: { type: String, required: true },
+  _id: { 
+    type: String,
+    required: true
+  },
+  title: { 
+    type: String, 
+    required: true, 
+    trim: true 
+  },
+  body: { 
+    type: String, 
+    required: true, 
+    trim: true 
+  },
+  style: { 
+    type: String, 
+    required: true, 
+    trim: true 
+  },
+  trashed: { 
+    type: Boolean, 
+    required: true, 
+    lowercase: true, 
+    trim: true
+  },
+  deleted_date: { 
+    type: String, 
+    required: true, 
+    lowercase: true, 
+    trim: true,
+    match: [
+      /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/,
+      'Data inválida'
+    ]
+  },
+  update_at: { 
+    type: String, 
+    required: true, 
+    lowercase: true, 
+    trim: true,
+    default: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'), // Valor padrão usando Moment.js
+    match: [
+      /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/,
+      'Data inválida'
+    ]
+  },
 });
 
 const Note = mongoose.model<INote>("Note", noteSchema);

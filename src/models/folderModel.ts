@@ -61,14 +61,39 @@ export interface IFolder extends Document {
   notes: INote[];
 }
 
-const folderSchema = new Schema({
-  _id: { type: String },
-  name: { type: String, required: true },
-  is_default: { type: Boolean, required: true },
-  color: { type: String, required: true },
-  order: { type: Number, required: true },
-  notes: [noteSchema], 
-});
+const folderSchema = new Schema(
+  {
+    _id: { 
+      type: String,
+      required: true
+    },
+    name: { 
+      type: String, 
+      required: true, 
+      trim: true 
+    },
+    is_default: { 
+      type: Boolean, 
+      required: true, 
+      lowercase: true, 
+      trim: true 
+    },
+    color: { 
+      type: String, 
+      required: true, 
+      trim: true  
+    },
+    order: { 
+      type: Number, 
+      required: true,
+      min: [
+        0,
+        'Order inválida'
+      ]
+    },
+    notes: [noteSchema], 
+  }
+);
 
 const Folder = mongoose.model<IFolder>("Folder", folderSchema);
 
