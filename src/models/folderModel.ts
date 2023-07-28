@@ -1,6 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { IsString, IsBoolean, IsNotEmpty, IsInt, Min, ArrayNotEmpty, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ObjectId } from "mongodb";
-import { INote, noteSchema, noteDefault } from './noteModel';
+import { Note, noteDefault } from './noteModel';
 
 /**
  * @swagger
@@ -27,7 +28,7 @@ import { INote, noteSchema, noteDefault } from './noteModel';
  *         - notes
  *       properties:
  *         _id:
- *           type: string
+ *           type: ObjectId
  *           description: Identificador único da pasta
  *           example: "6123456789abcdef01234567"
  *         name:
@@ -52,54 +53,45 @@ import { INote, noteSchema, noteDefault } from './noteModel';
  *             $ref: "#/components/schemas/Note"
  */
 
-export interface IFolder extends Document {
-  _id: string | undefined;
+class Folder {
+  @IsNotEmpty({ message: 'O campo _id é obrigatório.' })
+  _id: ObjectId;
+
+  @IsString({ message: 'O campo name deve ser uma string.' })
+  @IsNotEmpty({ message: 'O campo name é obrigatório.' })
   name: string;
+
+  @IsBoolean({ message: 'O campo is_default deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo is_default é obrigatório.' })
   is_default: boolean;
+
+  @IsString({ message: 'O campo color deve ser uma string.' })
+  @IsNotEmpty({ message: 'O campo color é obrigatório.' })
   color: string;
+
+  @IsInt({ message: 'O campo order deve ser um número inteiro.' })
+  @IsNotEmpty({ message: 'O campo order é obrigatório.' })
+  @Min(0, { message: 'O campo order deve ser maior ou igual a 0.' })
   order: number;
-  notes: INote[];
-}
 
-const folderSchema = new Schema(
-  {
-    _id: { 
-      type: String,
-      required: true
-    },
-    name: { 
-      type: String, 
-      required: true, 
-      trim: true 
-    },
-    is_default: { 
-      type: Boolean, 
-      required: true, 
-      lowercase: true, 
-      trim: true 
-    },
-    color: { 
-      type: String, 
-      required: true, 
-      trim: true  
-    },
-    order: { 
-      type: Number, 
-      required: true,
-      min: [
-        0,
-        'Order inválida'
-      ]
-    },
-    notes: [noteSchema], 
+  @IsNotEmpty({ message: 'O campo notes é obrigatório.' })
+  @ValidateNested({ each: true })
+  @Type(() => Note)
+  notes: Note[];
+
+  constructor(payload: Folder) {
+    this._id = payload._id;
+    this.name = payload.name ? payload.name.trim() : '';
+    this.is_default = payload.is_default;
+    this.color = payload.color ? payload.color.trim() : '';
+    this.order = payload.order;
+    this.notes = payload.notes;
   }
-);
-
-const Folder = mongoose.model<IFolder>("Folder", folderSchema);
+}
 
 // Define a folder padrão
 const folderDefault = {
-  _id: new ObjectId().toHexString(),
+  _id: new ObjectId(),
   name: "default",
   is_default: true,
   color: "#FFFFFF",
@@ -107,4 +99,4 @@ const folderDefault = {
   notes: [noteDefault]
 };
 
-export { Folder, folderSchema, folderDefault };
+export { Folder, folderDefault };

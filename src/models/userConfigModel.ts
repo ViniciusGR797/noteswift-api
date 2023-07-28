@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { IsBoolean, IsNotEmpty } from 'class-validator';
 
 /**
  * @swagger
@@ -35,52 +35,35 @@ import mongoose, { Schema, Document } from 'mongoose';
  *           example: true
  */
 
-export interface IUserConfig extends Document {
-    dark_mode: boolean;
-    draft_notification: boolean;
-    archived: boolean;
-    auto_backup: boolean;
-    news: boolean;
+class UserConfig {
+  @IsBoolean({ message: 'O campo dark_mode deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo dark_mode é obrigatório.' })
+  dark_mode: boolean;
+
+  @IsBoolean({ message: 'O campo draft_notification deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo draft_notification é obrigatório.' })
+  draft_notification: boolean;
+
+  @IsBoolean({ message: 'O campo archived deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo archived é obrigatório.' })
+  archived: boolean;
+
+  @IsBoolean({ message: 'O campo auto_backup deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo auto_backup é obrigatório.' })
+  auto_backup: boolean;
+
+  @IsBoolean({ message: 'O campo news deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo news é obrigatório.' })
+  news: boolean;
+
+  constructor(payload: UserConfig) {
+    this.dark_mode = payload.dark_mode;
+    this.draft_notification = payload.draft_notification;
+    this.archived = payload.archived;
+    this.auto_backup = payload.auto_backup;
+    this.news = payload.news;
+  }
 }
-
-const userConfigSchema = new Schema<IUserConfig>(
-    {
-        dark_mode: { 
-            type: Boolean, 
-            required: true, 
-            lowercase: true, 
-            trim: true 
-        },
-        draft_notification: { 
-            type: Boolean, 
-            required: true, 
-            lowercase: true, 
-            trim: true 
-        },
-        archived: { 
-            type: Boolean, 
-            required: true, 
-            lowercase: true, 
-            trim: true 
-        },
-        auto_backup: { 
-            type: Boolean, 
-            required: true, 
-            lowercase: true, 
-            trim: true 
-        },
-        news: { 
-            type: Boolean, 
-            required: true, 
-            lowercase: true, 
-            trim: true 
-        },
-    },{ 
-        _id: false 
-    }
-);
-
-const UserConfig = mongoose.model<IUserConfig>("UserConfig", userConfigSchema);
 
 // Define a config padrão
 const userConfigDefault = {
@@ -91,4 +74,4 @@ const userConfigDefault = {
     news: true
 };
 
-export { UserConfig, userConfigSchema, userConfigDefault };
+export { UserConfig, userConfigDefault };

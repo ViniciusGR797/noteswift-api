@@ -133,6 +133,13 @@ router.post('/', UserController.createUser);
  *             schema:
  *               $ref: "#/components/schemas/LoginSuccess"
  *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:

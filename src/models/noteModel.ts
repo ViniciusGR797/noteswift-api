@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { IsString, IsBoolean, IsNotEmpty, Matches } from 'class-validator';
 import { ObjectId } from "mongodb";
 import moment from 'moment-timezone';
 
@@ -18,7 +18,7 @@ import moment from 'moment-timezone';
  *         - update_at
  *       properties:
  *         _id:
- *           type: string
+ *           type: ObjectId
  *           description: Identificador único da nota
  *           example: "6123456789abcdef01234567"
  *         title:
@@ -47,76 +47,55 @@ import moment from 'moment-timezone';
  *           example: "2022-01-01 10:30:00"
  */
 
-export interface INote extends Document {
-  _id: string | undefined;
+class Note {
+  @IsNotEmpty({ message: 'O campo _id é obrigatório.' })
+  _id: ObjectId;
+
+  @IsString({ message: 'O campo title deve ser uma string.' })
+  @IsNotEmpty({ message: 'O campo title é obrigatório.' })
   title: string;
+
+  @IsString({ message: 'O campo body deve ser uma string.' })
+  @IsNotEmpty({ message: 'O campo body é obrigatório.' })
   body: string;
+
+  @IsString({ message: 'O campo style deve ser uma string.' })
+  @IsNotEmpty({ message: 'O campo style é obrigatório.' })
   style: string;
+
+  @IsBoolean({ message: 'O campo trashed deve ser um valor booleano.' })
+  @IsNotEmpty({ message: 'O campo trashed é obrigatório.' })
   trashed: boolean;
+
+  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss".' })
+  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss".' })
   deleted_date: string;
+
+  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss".' })
+  @IsNotEmpty({ message: 'O campo update_at é obrigatório.' })
+  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss".' })
   update_at: string;
+
+  constructor(payload: Note) {
+    this._id = payload._id;
+    this.title = payload.title ? payload.title.trim() : '';
+    this.body = payload.body ? payload.body.trim() : '';
+    this.style = payload.style ? payload.style.trim() : '';
+    this.trashed = payload.trashed;
+    this.deleted_date = payload.deleted_date ? payload.deleted_date.trim() : '';
+    this.update_at = payload.update_at ? payload.update_at.trim() : '';
+  }
 }
-
-const noteSchema = new Schema({
-  _id: { 
-    type: String,
-    required: true
-  },
-  title: { 
-    type: String, 
-    required: true, 
-    trim: true 
-  },
-  body: { 
-    type: String, 
-    required: true, 
-    trim: true 
-  },
-  style: { 
-    type: String, 
-    required: true, 
-    trim: true 
-  },
-  trashed: { 
-    type: Boolean, 
-    required: true, 
-    lowercase: true, 
-    trim: true
-  },
-  deleted_date: { 
-    type: String, 
-    required: true, 
-    lowercase: true, 
-    trim: true,
-    match: [
-      /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/,
-      'Data inválida'
-    ]
-  },
-  update_at: { 
-    type: String, 
-    required: true, 
-    lowercase: true, 
-    trim: true,
-    default: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'), // Valor padrão usando Moment.js
-    match: [
-      /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/,
-      'Data inválida'
-    ]
-  },
-});
-
-const Note = mongoose.model<INote>("Note", noteSchema);
 
 // Define a note padrão
 const noteDefault = {
-  _id: new ObjectId().toHexString(),
+  _id: new ObjectId(),
   title: 'Título da anotação',
   body: 'Texto da anotação',
-  style: '',
+  style: 'Estilo',
   trashed: false,
   deleted_date: '',
   update_at: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'),
 };
 
-export { Note, noteSchema, noteDefault };
+export { Note, noteDefault };

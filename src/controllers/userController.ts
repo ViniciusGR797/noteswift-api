@@ -4,9 +4,10 @@ import { userConfigDefault } from '../models/userConfigModel';
 import { UserService } from '../services/userService';
 import { Password } from '../securities/password';
 import { Token } from '../securities/token'; 
-import { Validate } from '../utils/validate';
 import { sendEmail, EmailOptions, Template  } from '../utils/email';
-import { UpsertUser } from '../models/userModel';
+import { UpsertUser, User, UserLogin } from '../models/userModel';
+import { validate } from 'class-validator';
+import { ObjectId } from "mongodb";
 
 export class UserController {
   static async getUserMe(req: Request, res: Response): Promise<Response> {
@@ -27,16 +28,15 @@ export class UserController {
   static async createUser(req: Request, res: Response): Promise<Response> {
     const payload = new UpsertUser(req.body);
 
-    // Valida o payload do novo usuário antes de prosseguir
-    const { data, error: payloadError } = await Validate.validateData(payload);
-    if (payloadError) {
-      return res.status(400).json({ msg: payloadError });
+    const errors = await validate(payload);
+    if (errors.length > 0) {
+      const firstError = errors[0];
+      const errorMessage = firstError.constraints ? Object.values(firstError.constraints)[0] : 'Alguns parâmetros podem estar faltando ou serem inválidos';
+      return res.status(400).json({ msg: errorMessage });
     }
 
-    console.log("Passou")
-
     // Verifica se o email já existe no banco de dados (garante que seja único)
-    const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(data.email);
+    const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(payload.email);
     if (getUserEmailError) {
       return res.status(500).json({ msg: getUserEmailError });
     }
@@ -44,12 +44,15 @@ export class UserController {
       return res.status(400).json({ msg: 'Email já cadastrado no sistema' });
     }
 
-    // Popula payload
-    data.library = [folderDefault];
-    data.config = userConfigDefault;
-
-    // Criptografa a senha antes de salvar o usuário no banco de dados
-    data.pwd = await Password.hashPassword(data.pwd);
+    // Popula com dados o novo user
+    const data = new User({
+      "_id": new ObjectId(),
+      "name": payload.name,
+      "email": payload.email,
+      "pwd": await Password.hashPassword(payload.pwd),
+      "library": [folderDefault],
+      "config": userConfigDefault
+    });
 
     // Cria o novo usuário
     const { createdUserID, error: createUserError } = await UserService.createUser(data);
@@ -70,10 +73,17 @@ export class UserController {
   }
 
   static async loginUser(req: Request, res: Response): Promise<Response> {
-    const { email, pwd } = req.body;
+    const payload = new UserLogin(req.body);
+
+    const errors = await validate(payload);
+    if (errors.length > 0) {
+      const firstError = errors[0];
+      const errorMessage = firstError.constraints ? Object.values(firstError.constraints)[0] : 'Alguns parâmetros podem estar faltando ou serem inválidos';
+      return res.status(400).json({ msg: errorMessage });
+    }
 
     // Verifica se o email existe no banco de dados
-    const { user, error: getUserError } = await UserService.getUserByEmail(email);
+    const { user, error: getUserError } = await UserService.getUserByEmail(payload.email);
     if (getUserError) {
       return res.status(500).json({ msg: getUserError });
     }
@@ -82,7 +92,7 @@ export class UserController {
     }
 
     // Verifica se a senha é válida
-    const isPasswordValid = await Password.comparePassword(pwd, user.pwd);
+    const isPasswordValid = await Password.comparePassword(payload.pwd, user.pwd);
     if (!isPasswordValid) {
       return res.status(401).json({ msg: 'Credenciais de usuário inválidas' });
     }
@@ -107,15 +117,18 @@ export class UserController {
       return res.status(404).json({ msg: 'Nenhum dado encontrado' });
     }
 
-    // Valida o payload do usuário atualizado antes de prosseguir
-    const { data, error: payloadError } = await Validate.validateData(req.body);
-    if (payloadError) {
-      return res.status(400).json({ msg: payloadError });
+    const payload = new UpsertUser(req.body);
+
+    const errors = await validate(payload);
+    if (errors.length > 0) {
+      const firstError = errors[0];
+      const errorMessage = firstError.constraints ? Object.values(firstError.constraints)[0] : 'Alguns parâmetros podem estar faltando ou serem inválidos';
+      return res.status(400).json({ msg: errorMessage });
     }
 
     // Verifica se o email já existe no banco de dados, exceto se for o email atual do usuário
-    if (data.email !== user.email) {
-      const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(data.email);
+    if (payload.email !== user.email) {
+      const { user: existingUser, error: getUserEmailError } = await UserService.getUserByEmail(payload.email);
       if (getUserEmailError) {
         return res.status(500).json({ msg: getUserEmailError });
       }
@@ -125,12 +138,12 @@ export class UserController {
     }  
 
     // Criptografa a senha antes de salvar o usuário no banco de dados
-    data.pwd = await Password.hashPassword(data.pwd);
+    payload.pwd = await Password.hashPassword(payload.pwd);
 
     // Mantém o valor anterior se não fornecer um novo nome, email ou senha
-    user.name = data.name || user.name; 
-    user.email = data.email || user.email; 
-    user.pwd = data.pwd || user.pwd;
+    user.name = payload.name || user.name; 
+    user.email = payload.email || user.email; 
+    user.pwd = payload.pwd || user.pwd;
 
     // Salva as alterações no banco de dados
     const { updatedUser, error: updateUserError } = await UserService.updateUser(userId, user);
