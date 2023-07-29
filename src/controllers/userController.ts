@@ -59,6 +59,9 @@ export class UserController {
     if (createUserError) {
       return res.status(500).json({ msg: createUserError });
     }
+    if (!createdUserID || createdUserID === "") {
+        return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+    }
 
     // Busca o usuário criado para validação
     const { user, error: getUserError } = await UserService.getUserById(createdUserID);

@@ -88,6 +88,61 @@ class Note {
   }
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NoteCreate:
+ *       type: object
+ *       required:
+ *         - title
+ *         - body
+ *         - style
+ *         - folder_id
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Título da nota
+ *           example: "Título da nota"
+ *         body:
+ *           type: string
+ *           description: Corpo da nota
+ *           example: "Corpo da nota"
+ *         style:
+ *           type: string
+ *           description: Estilo da nota
+ *           example: "Estilo da nota"
+ *         folder_id:
+ *           type: ObjectId
+ *           description: Identificador único da pasta, onde a anotação será armazenada
+ *           example: "6123456789abcdef01234567"
+ */
+
+class NoteCreate {
+  @IsString({ message: 'O campo title deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo title é obrigatório' })
+  title: string;
+
+  @IsString({ message: 'O campo body deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo body é obrigatório' })
+  body: string;
+
+  @IsString({ message: 'O campo style deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo style é obrigatório' })
+  style: string;
+
+  @IsObjectId({ message: 'O campo folder_id deve ser um ObjectId válido' })
+  @IsNotEmpty({ message: 'O campo folder_id é obrigatório' })
+  folder_id: ObjectId;
+
+  constructor(payload: NoteCreate) {
+    this.title = typeof payload.title === 'string' ? payload.title.trim() : payload.title;
+    this.body = typeof payload.body === 'string' ? payload.body.trim() : payload.body;
+    this.style = typeof payload.style === 'string' ? payload.style.trim() : payload.style;
+    this.folder_id = payload.folder_id;
+  }
+}
+
 // Define a note padrão
 const noteDefault = {
   _id: new ObjectId(),
@@ -99,4 +154,4 @@ const noteDefault = {
   update_at: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'),
 };
 
-export { Note, noteDefault };
+export { Note, NoteCreate, noteDefault };

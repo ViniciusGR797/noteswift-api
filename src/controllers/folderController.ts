@@ -102,6 +102,9 @@ export class FolderController {
         if (createFolderError) {
             return res.status(500).json({ msg: createFolderError });
         }
+        if (!createdFolderID || createdFolderID === "") {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
 
         // Busca a folder criado para validação
         const { folder, error: getFolderError } = await FolderService.getFolderById(user_id, createdFolderID);
