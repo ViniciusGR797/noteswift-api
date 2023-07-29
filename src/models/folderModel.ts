@@ -208,7 +208,7 @@ const folderDefault = {
   _id: new ObjectId(),
   name: "default",
   is_default: true,
-  color: "#FFFFFF",
+  color: "#33A7FF",
   order: 1,
   notes: [noteDefault]
 };

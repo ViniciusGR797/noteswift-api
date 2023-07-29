@@ -143,4 +143,34 @@ export class FolderService {
             return { updatedFolder: null, error: 'Erro interno do servidor' };
         }
     }
+
+    // Função para remover library, deixa apenas library default
+    static async deleteFolder(user_id: string, folder_id: string): Promise<{ deletedUserWithoutFolder: any | null; error: string | null }> {
+        try {
+            const db = getDB();
+            const collection = db.collection('users');
+
+            // Encontra o usuário no banco de dados pelo ID
+            const user = await collection.findOne({ _id: new ObjectId(user_id) });
+
+            // Verifica se o usuário foi encontrado
+            if (!user) {
+                return { deletedUserWithoutFolder: null, error: null };
+            }
+
+            // Filtra as pastas para remover pasta desejada
+            const updatedLibrary = user.library.filter((folder: any) => !folder._id.equals(new ObjectId(folder_id)));
+
+            // Atualiza o usuário no banco de dados, mantendo apenas a pasta padrão na biblioteca
+            await collection.updateOne({ _id: new ObjectId(user_id) }, { $set: { library: updatedLibrary } });
+
+            // Pega user com apenas folder apagada para mandar por email
+            user.library = user.library.filter((folder: any) => folder._id.equals(new ObjectId(folder_id)));
+
+            // Retorna o usuário atualizado
+            return { deletedUserWithoutFolder: user, error: null };
+        } catch (error) {
+            return { deletedUserWithoutFolder: null, error: 'Erro interno do servidor' };
+        }
+    }
 }

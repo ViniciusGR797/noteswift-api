@@ -74,6 +74,9 @@ export class LibraryService {
       // Atualiza o usuário no banco de dados, mantendo apenas a pasta padrão na biblioteca
       await collection.updateOne({ _id: new ObjectId(user_id) }, { $set: { library: updatedLibrary } });
 
+      // Pega user com apenas folder apagadas para mandar por email
+      user.library = user.library.filter((folder: any) => !folder.is_default);
+
       // Retorna o usuário atualizado
       return { deletedUserWithoutLibrary: user, error: null };
     } catch (error) {

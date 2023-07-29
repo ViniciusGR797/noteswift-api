@@ -311,4 +311,62 @@ router.post('/', authMiddleware, FolderController.createFolder);
 
 router.put('/:folder_id', authMiddleware, FolderController.updateFolder);
 
+/**
+ * @swagger
+ * /folders/{folder_id}:
+ *   parameters:
+ *     - name: folder_id
+ *       in: path
+ *       required: true
+ *       description: ID da pasta que será deletada
+ *       schema:
+ *         type: string
+ *   delete:
+ *     summary: Remove pasta
+ *     description: Apaga pasta, lembrando que a pasta default não pode ser apagada
+ *     tags:
+ *       - Folder
+ *     operationId: delete_folder
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/DeleteSuccess"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.delete('/:folder_id', authMiddleware, FolderController.deleteFolder);
+
 export default router;
