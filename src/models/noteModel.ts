@@ -14,7 +14,6 @@ import moment from 'moment-timezone';
  *         - body
  *         - style
  *         - trashed
- *         - deleted_date
  *         - update_at
  *       properties:
  *         _id:
@@ -48,42 +47,42 @@ import moment from 'moment-timezone';
  */
 
 class Note {
-  @IsNotEmpty({ message: 'O campo _id é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo _id é obrigatório' })
   _id: ObjectId;
 
-  @IsString({ message: 'O campo title deve ser uma string.' })
-  @IsNotEmpty({ message: 'O campo title é obrigatório.' })
+  @IsString({ message: 'O campo title deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo title é obrigatório' })
   title: string;
 
-  @IsString({ message: 'O campo body deve ser uma string.' })
-  @IsNotEmpty({ message: 'O campo body é obrigatório.' })
+  @IsString({ message: 'O campo body deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo body é obrigatório' })
   body: string;
 
-  @IsString({ message: 'O campo style deve ser uma string.' })
-  @IsNotEmpty({ message: 'O campo style é obrigatório.' })
+  @IsString({ message: 'O campo style deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo style é obrigatório' })
   style: string;
 
-  @IsBoolean({ message: 'O campo trashed deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo trashed é obrigatório.' })
+  @IsBoolean({ message: 'O campo trashed deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo trashed é obrigatório' })
   trashed: boolean;
 
-  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss".' })
-  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss".' })
+  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss"' })
+  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss"' })
   deleted_date: string;
 
-  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss".' })
+  @IsString({ message: 'Formato de data inválido. Use o formato "YYYY-MM-DD HH:mm:ss"' })
   @IsNotEmpty({ message: 'O campo update_at é obrigatório.' })
-  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss".' })
+  @Matches(/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/, { message: 'Data inválida. Use o formato "YYYY-MM-DD HH:mm:ss"' })
   update_at: string;
 
   constructor(payload: Note) {
     this._id = payload._id;
-    this.title = payload.title ? payload.title.trim() : '';
-    this.body = payload.body ? payload.body.trim() : '';
-    this.style = payload.style ? payload.style.trim() : '';
+    this.title = typeof payload.title === 'string' ? payload.title.trim() : payload.title;
+    this.body = typeof payload.body === 'string' ? payload.body.trim() : payload.body;
+    this.style = typeof payload.style === 'string' ? payload.style.trim() : payload.style;
     this.trashed = payload.trashed;
-    this.deleted_date = payload.deleted_date ? payload.deleted_date.trim() : '';
-    this.update_at = payload.update_at ? payload.update_at.trim() : '';
+    this.deleted_date = typeof payload.deleted_date === 'string' ? payload.deleted_date.trim() : payload.deleted_date;
+    this.update_at = typeof payload.update_at === 'string' ? payload.update_at.trim() : payload.update_at;
   }
 }
 

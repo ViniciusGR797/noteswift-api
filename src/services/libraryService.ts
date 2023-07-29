@@ -3,11 +3,11 @@ import { getDB } from '../utils/database';
 
 export class LibraryService {
   // Função para buscar library 
-  static async getLibrary(userId: string): Promise<{ library: any | null, error: string | null }> {
+  static async getLibrary(user_id: string): Promise<{ library: any | null, error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection("users");
-      const user = await collection.findOne({ _id: new ObjectId(userId) });
+      const user = await collection.findOne({ _id: new ObjectId(user_id) });
 
       // Verificar se o usuário foi encontrado no banco de dados
       if (!user) {
@@ -24,13 +24,13 @@ export class LibraryService {
   }
 
   // Função para remover library, deixa apenas library default
-  static async deleteLibraryAndKeepDefault(userId: string): Promise<{ deletedUserWithoutLibrary: any | null; error: string | null }> {
+  static async deleteLibraryAndKeepDefault(user_id: string): Promise<{ deletedUserWithoutLibrary: any | null; error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection('users');
   
       // Encontra o usuário no banco de dados pelo ID
-      const user = await collection.findOne({ _id: new ObjectId(userId) });
+      const user = await collection.findOne({ _id: new ObjectId(user_id) });
   
       // Verifica se o usuário foi encontrado
       if (!user) {
@@ -41,7 +41,7 @@ export class LibraryService {
       const updatedLibrary = user.library.filter((folder: any) => folder.is_default);
   
       // Atualiza o usuário no banco de dados, mantendo apenas a pasta padrão na biblioteca
-      await collection.updateOne({ _id: new ObjectId(userId) }, { $set: { library: updatedLibrary } });
+      await collection.updateOne({ _id: new ObjectId(user_id) }, { $set: { library: updatedLibrary } });
   
       // Retorna o usuário atualizado
       return { deletedUserWithoutLibrary: user, error: null };

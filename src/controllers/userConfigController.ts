@@ -6,7 +6,7 @@ import { validate } from 'class-validator';
 export class UserConfigController {
   static async getUserConfig(req: Request, res: Response): Promise<Response> {
     // ID do usuário obtido pelo middleware de autenticação
-    const user_id = req.userId;
+    const user_id = req.user_id;
 
     const { userConfig, error } = await UserConfigService.getUserConfig(user_id);
     if (error) {
@@ -21,7 +21,7 @@ export class UserConfigController {
 
   static async updateUserConfig(req: Request, res: Response): Promise<Response> {
     // ID do usuário obtido pelo middleware de autenticação
-    const userId = req.userId; 
+    const user_id = req.user_id;
 
     const payload = new UserConfig(req.body);
 
@@ -33,12 +33,12 @@ export class UserConfigController {
     }
 
     // Salva as alterações no banco de dados
-    const { updatedUserConfig, error: updateUserError } = await UserConfigService.updateUserConfig(userId, payload);
+    const { updatedUserConfig, error: updateUserError } = await UserConfigService.updateUserConfig(user_id, payload);
     if (updateUserError) {
       return res.status(500).json({ msg: updateUserError });
     }
     if (!updatedUserConfig) {
-        return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+      return res.status(404).json({ msg: 'Nenhum dado encontrado' });
     }
 
     // Retorna o usuário atualizado

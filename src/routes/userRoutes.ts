@@ -15,7 +15,7 @@ const router = Router();
  * @swagger
  * /users:
  *   get:
- *     summary: Lista o usuário logado
+ *     summary: Vizualiza o usuário logado
  *     description: Retorna as informações do usuário logado
  *     tags:
  *       - User
@@ -76,7 +76,7 @@ router.get('/', authMiddleware, UserController.getUserMe);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/UserCreation"
+ *             $ref: "#/components/schemas/UserUpsert"
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso.
@@ -167,6 +167,12 @@ router.post('/login', UserController.loginUser);
  *     tags:
  *       - User
  *     operationId: update_user_me
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/UserUpsert"
  *     security:
  *       - jwt: []
  *     responses:
@@ -224,7 +230,7 @@ router.put('/', authMiddleware, UserController.updateUserMe);
  *     description: Apaga da base de dados seu usuário
  *     tags:
  *       - User
- *     operationId: remove_user_me
+ *     operationId: delete_user_me
  *     security:
  *       - jwt: []
  *     responses:
@@ -265,6 +271,6 @@ router.put('/', authMiddleware, UserController.updateUserMe);
  *         links: [] 
  */
 
-router.delete('/', authMiddleware, UserController.removeUserMe);
+router.delete('/', authMiddleware, UserController.deleteUserMe);
 
 export default router;

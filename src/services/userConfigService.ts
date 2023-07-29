@@ -3,11 +3,11 @@ import { getDB } from '../utils/database';
 
 export class UserConfigService {
   // Função para buscar configurações do usuário
-  static async getUserConfig(userId: string): Promise<{ userConfig: any | null, error: string | null }> {
+  static async getUserConfig(user_id: string): Promise<{ userConfig: any | null, error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection("users");
-      const user = await collection.findOne({ _id: new ObjectId(userId) });
+      const user = await collection.findOne({ _id: new ObjectId(user_id) });
 
       // Verifica se o usuário foi encontrado
       if (!user) {
@@ -21,14 +21,14 @@ export class UserConfigService {
   }
 
   // Função para atualizar configurações do usuário
-  static async updateUserConfig(userId: string, updatedUserConfig: any): Promise<{ updatedUserConfig: any | null; error: string | null }> {
+  static async updateUserConfig(user_id: string, updatedUserConfig: any): Promise<{ updatedUserConfig: any | null; error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection('users');
 
       // Atualiza o usuário no banco de dados e retorna o documento atualizado após a atualização
       const result = await collection.findOneAndUpdate(
-        { _id: new ObjectId(userId) },
+        { _id: new ObjectId(user_id) },
         { $set: { config: updatedUserConfig } },
         { returnDocument: 'after' } 
       );

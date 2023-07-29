@@ -3,16 +3,16 @@ import { folderDefault } from '../models/folderModel';
 import { userConfigDefault } from '../models/userConfigModel';
 import { UserService } from '../services/userService';
 import { Password } from '../securities/password';
-import { Token } from '../securities/token'; 
-import { sendEmail, EmailOptions, Template  } from '../utils/email';
-import { UpsertUser, User, UserLogin } from '../models/userModel';
+import { Token } from '../securities/token';
+import { sendEmail, EmailOptions, Template } from '../utils/email';
+import { UserUpsert, User, UserLogin } from '../models/userModel';
 import { validate } from 'class-validator';
 import { ObjectId } from "mongodb";
 
 export class UserController {
   static async getUserMe(req: Request, res: Response): Promise<Response> {
     // ID do usuário obtido pelo middleware de autenticação
-    const user_id = req.userId;
+    const user_id = req.user_id;
 
     const { user, error } = await UserService.getUserById(user_id);
     if (error) {
@@ -26,7 +26,7 @@ export class UserController {
   }
 
   static async createUser(req: Request, res: Response): Promise<Response> {
-    const payload = new UpsertUser(req.body);
+    let payload = new UserUpsert(req.body);
 
     const errors = await validate(payload);
     if (errors.length > 0) {
@@ -106,10 +106,10 @@ export class UserController {
 
   static async updateUserMe(req: Request, res: Response): Promise<Response> {
     // ID do usuário obtido pelo middleware de autenticação
-    const userId = req.userId; 
+    const user_id = req.user_id;
 
     // Verifica se o usuário existe no banco de dados
-    const { user, error: getUserError } = await UserService.getUserById(userId);
+    const { user, error: getUserError } = await UserService.getUserById(user_id);
     if (getUserError) {
       return res.status(500).json({ msg: getUserError });
     }
@@ -117,7 +117,7 @@ export class UserController {
       return res.status(404).json({ msg: 'Nenhum dado encontrado' });
     }
 
-    const payload = new UpsertUser(req.body);
+    const payload = new UserUpsert(req.body);
 
     const errors = await validate(payload);
     if (errors.length > 0) {
@@ -135,18 +135,18 @@ export class UserController {
       if (existingUser) {
         return res.status(400).json({ msg: 'Email já cadastrado no sistema' });
       }
-    }  
+    }
 
     // Criptografa a senha antes de salvar o usuário no banco de dados
     payload.pwd = await Password.hashPassword(payload.pwd);
 
     // Mantém o valor anterior se não fornecer um novo nome, email ou senha
-    user.name = payload.name || user.name; 
-    user.email = payload.email || user.email; 
+    user.name = payload.name || user.name;
+    user.email = payload.email || user.email;
     user.pwd = payload.pwd || user.pwd;
 
     // Salva as alterações no banco de dados
-    const { updatedUser, error: updateUserError } = await UserService.updateUser(userId, user);
+    const { updatedUser, error: updateUserError } = await UserService.updateUser(user_id, user);
     if (updateUserError) {
       return res.status(500).json({ msg: updateUserError });
     }
@@ -155,12 +155,12 @@ export class UserController {
     return res.status(200).json(updatedUser);
   }
 
-  static async removeUserMe(req: Request, res: Response): Promise<Response> {
+  static async deleteUserMe(req: Request, res: Response): Promise<Response> {
     // ID do usuário obtido pelo middleware de autenticação
-    const userId = req.userId;
+    const user_id = req.user_id;
 
     // Remove o usuário do banco de dados
-    const { deletedUser, error: deleteUserError } = await UserService.deleteUser(userId);
+    const { deletedUser, error: deleteUserError } = await UserService.deleteUser(user_id);
     if (deleteUserError) {
       return res.status(500).json({ msg: deleteUserError });
     }

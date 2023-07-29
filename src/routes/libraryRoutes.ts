@@ -70,7 +70,7 @@ router.get('/', authMiddleware, LibraryController.getLibrary);
  *     description: Apaga biblioteca de pastas, deixando apenas a pasta default
  *     tags:
  *       - Library
- *     operationId: remove_library
+ *     operationId: delete_library
  *     security:
  *       - jwt: []
  *     responses:
@@ -111,6 +111,6 @@ router.get('/', authMiddleware, LibraryController.getLibrary);
  *         links: [] 
  */
 
-router.delete('/', authMiddleware, LibraryController.removeLibrary);
+router.delete('/', authMiddleware, LibraryController.deleteLibrary);
 
 export default router;

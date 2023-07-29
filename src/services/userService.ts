@@ -3,11 +3,11 @@ import { getDB } from '../utils/database';
 
 export class UserService {
   // Função para buscar o usuário por ID 
-  static async getUserById(userId: string): Promise<{ user: any | null, error: string | null }> {
+  static async getUserById(user_id: string): Promise<{ user: any | null, error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection("users");
-      const user = await collection.findOne({ _id: new ObjectId(userId) });
+      const user = await collection.findOne({ _id: new ObjectId(user_id) });
 
       return { user: user, error: null };      
     } catch (error) {
@@ -47,14 +47,14 @@ export class UserService {
   }
 
   // Função para atualizar um usuário
-  static async updateUser(userId: string, updatedUser: any): Promise<{ updatedUser: any | null; error: string | null }> {
+  static async updateUser(user_id: string, updatedUser: any): Promise<{ updatedUser: any | null; error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection('users');
 
       // Atualiza o usuário no banco de dados e retorna o documento atualizado após a atualização
       const result = await collection.findOneAndUpdate(
-        { _id: new ObjectId(userId) },
+        { _id: new ObjectId(user_id) },
         { $set: updatedUser },
         { returnDocument: 'after' } 
       );
@@ -72,13 +72,13 @@ export class UserService {
   }
 
   // Função para remover um usuário
-  static async deleteUser(userId: string): Promise<{ deletedUser: any | null; error: string | null }> {
+  static async deleteUser(user_id: string): Promise<{ deletedUser: any | null; error: string | null }> {
     try {
       const db = getDB();
       const collection = db.collection('users');
 
       // Encontra o usuário no banco de dados pelo ID e o remove
-      const result = await collection.findOneAndDelete({ _id: new ObjectId(userId) });
+      const result = await collection.findOneAndDelete({ _id: new ObjectId(user_id) });
 
       // Verifica se o usuário foi encontrado e removido
       if (!result.value) {

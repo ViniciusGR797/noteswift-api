@@ -36,24 +36,24 @@ import { IsBoolean, IsNotEmpty } from 'class-validator';
  */
 
 class UserConfig {
-  @IsBoolean({ message: 'O campo dark_mode deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo dark_mode é obrigatório.' })
+  @IsBoolean({ message: 'O campo dark_mode deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo dark_mode é obrigatório' })
   dark_mode: boolean;
 
-  @IsBoolean({ message: 'O campo draft_notification deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo draft_notification é obrigatório.' })
+  @IsBoolean({ message: 'O campo draft_notification deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo draft_notification é obrigatório' })
   draft_notification: boolean;
 
-  @IsBoolean({ message: 'O campo archived deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo archived é obrigatório.' })
+  @IsBoolean({ message: 'O campo archived deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo archived é obrigatório' })
   archived: boolean;
 
-  @IsBoolean({ message: 'O campo auto_backup deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo auto_backup é obrigatório.' })
+  @IsBoolean({ message: 'O campo auto_backup deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo auto_backup é obrigatório' })
   auto_backup: boolean;
 
-  @IsBoolean({ message: 'O campo news deve ser um valor booleano.' })
-  @IsNotEmpty({ message: 'O campo news é obrigatório.' })
+  @IsBoolean({ message: 'O campo news deve ser um valor booleano' })
+  @IsNotEmpty({ message: 'O campo news é obrigatório' })
   news: boolean;
 
   constructor(payload: UserConfig) {

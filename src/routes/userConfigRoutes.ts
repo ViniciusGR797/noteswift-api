@@ -15,7 +15,7 @@ const router = Router();
  * @swagger
  * /configs:
  *   get:
- *     summary: Lista configurações do usuário logado
+ *     summary: Vizualiza configurações do usuário logado
  *     description: Retorna as informações de configuração do usuário logado
  *     tags:
  *       - Config
@@ -64,7 +64,7 @@ router.get('/', authMiddleware, UserConfigController.getUserConfig);
 
 /**
  * @swagger
- * /users:
+ * /configs:
  *   put:
  *     summary: Atualiza configurações do usuário logado
  *     description: Atualiza as informações de configuração do usuário logado

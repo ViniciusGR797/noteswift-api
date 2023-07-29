@@ -43,39 +43,40 @@ import { UserConfig } from './userConfigModel';
  */
 
 class User {
-  @IsNotEmpty({ message: 'O campo _id é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo _id é obrigatório' })
   _id: ObjectId;
 
-  @IsString({ message: 'O campo name deve ser uma string.' })
-  @IsNotEmpty({ message: 'O campo name é obrigatório.' })
+  @IsString({ message: 'O campo name deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo name é obrigatório' })
   name: string;
 
   @IsEmail({}, { message: 'Email inválido' })
-  @IsNotEmpty({ message: 'O campo email é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
   @IsString()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
   @ValidateNested({ each: true })
   @Type(() => Folder)
-  @ArrayNotEmpty({ message: 'O campo library deve conter pelo menos um elemento.' })
+  @IsNotEmpty({ message: 'O campo library é obrigatório' })
+  @ArrayNotEmpty({ message: 'O campo library deve conter pelo menos um elemento' })
   library: Folder[];
 
   @ValidateNested()
   @Type(() => UserConfig)
-  @IsNotEmpty({ message: 'O campo config é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo config é obrigatório' })
   config: UserConfig;
 
   constructor(payload: User) {
     this._id = payload._id;
-    this.name = payload.name ? payload.name.trim() : '';
-    this.email = payload.email ? payload.email.trim().toLowerCase() : '';
-    this.pwd = payload.pwd ? payload.pwd.trim() :  '';
+    this.name = typeof payload.name === 'string' ? payload.name.trim() : payload.name;
+    this.email = typeof payload.email === 'string' ? payload.email.trim().toLowerCase() : payload.email;
+    this.pwd = typeof payload.pwd === 'string' ? payload.pwd.trim() : payload.pwd;
     this.library = payload.library;
     this.config = payload.config;
   }
@@ -85,7 +86,7 @@ class User {
  * @swagger
  * components:
  *   schemas:
- *     UpsertUser:
+ *     UserUpsert:
  *       type: object
  *       required:
  *         - name
@@ -106,26 +107,26 @@ class User {
  *           example: "senha"
  */
 
-class UpsertUser {
-  @IsString({ message: 'O campo name deve ser uma string.' })
-  @IsNotEmpty({ message: 'O campo name é obrigatório.' })
+class UserUpsert {
+  @IsString({ message: 'O campo name deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo name é obrigatório' })
   name: string;
 
   @IsEmail({}, { message: 'Email inválido' })
-  @IsNotEmpty({ message: 'O campo email é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
   @IsString()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
-  constructor(payload: User) {
-    this.name = payload.name ? payload.name.trim() : '';
-    this.email = payload.email ? payload.email.trim().toLowerCase() : '';
-    this.pwd = payload.pwd ? payload.pwd.trim() :  '';
+  constructor(payload: UserUpsert) {
+    this.name = typeof payload.name === 'string' ? payload.name.trim() : payload.name;
+    this.email = typeof payload.email === 'string' ? payload.email.trim().toLowerCase() : payload.email;
+    this.pwd = typeof payload.pwd === 'string' ? payload.pwd.trim() : payload.pwd;
   }
 }
 
@@ -151,20 +152,20 @@ class UpsertUser {
 
 class UserLogin {
   @IsEmail({}, { message: 'Email inválido' })
-  @IsNotEmpty({ message: 'O campo email é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
   @IsString()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório.' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
-  constructor(payload: User) {
-    this.email = payload.email ? payload.email.trim().toLowerCase() : '';
-    this.pwd = payload.pwd ? payload.pwd.trim() :  '';
+  constructor(payload: UserLogin) {
+    this.email = typeof payload.email === 'string' ? payload.email.trim().toLowerCase() : payload.email;
+    this.pwd = typeof payload.pwd === 'string' ? payload.pwd.trim() : payload.pwd;
   }
 }
 
-export { User, UpsertUser, UserLogin };
+export { User, UserUpsert, UserLogin };
