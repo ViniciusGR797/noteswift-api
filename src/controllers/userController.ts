@@ -140,7 +140,7 @@ export class UserController {
     // Criptografa a senha antes de salvar o usuário no banco de dados
     payload.pwd = await Password.hashPassword(payload.pwd);
 
-    // Mantém o valor anterior se não fornecer um novo nome, email ou senha
+    // Mantém o valor anterior se não fornecer um novo 
     user.name = payload.name || user.name;
     user.email = payload.email || user.email;
     user.pwd = payload.pwd || user.pwd;

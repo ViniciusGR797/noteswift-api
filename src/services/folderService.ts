@@ -77,11 +77,11 @@ export class FolderService {
             // Verificar se o usuário foi encontrado no banco de dados
             if (!user) {
                 return { createdFolderID: "", error: null };
-            }            
+            }
 
             // Obter o campo library e adiciona folder
             const library = user.library;
-            library.push(data)     
+            library.push(data)
 
             // Atualiza o usuário no banco de dados e retorna o documento atualizado após a atualização
             const result = await collection.findOneAndUpdate(
@@ -99,6 +99,48 @@ export class FolderService {
             return { createdFolderID: result.value.library[user.library.length - 1]._id, error: null };
         } catch (error) {
             return { createdFolderID: "", error: 'Erro interno do servidor' };
+        }
+    }
+
+    // Função para atualizar configurações do usuário
+    static async updateFolder(user_id: string, updatedFolder: any): Promise<{ updatedFolder: any | null; error: string | null }> {
+        try {
+            const db = getDB();
+            const collection = db.collection("users");
+            const user = await collection.findOne({ _id: new ObjectId(user_id) });
+
+            // Verificar se o usuário foi encontrado no banco de dados
+            if (!user) {
+                return { updatedFolder: null, error: null };
+            }
+
+            // Encontrar o folder na biblioteca do usuário
+            const folderIndex = user.library.findIndex((folder: any) => folder._id.equals(updatedFolder._id));
+
+            // Verificar se o folder foi encontrado na biblioteca do usuário
+            if (folderIndex === -1) {
+                return { updatedFolder: null, error: null };
+            }
+
+            // Atualizar o folder com os dados fornecidos
+            user.library[folderIndex] = { ...user.library[folderIndex], ...updatedFolder };
+
+            // Atualiza o usuário no banco de dados e retorna o documento atualizado após a atualização
+            const result = await collection.findOneAndUpdate(
+                { _id: new ObjectId(user_id) },
+                { $set: { library: user.library } },
+                { returnDocument: 'after' }
+            );
+
+            // Verifica se o usuário foi encontrado e atualizado
+            if (!result.value) {
+                return { updatedFolder: null, error: null };
+            }
+
+            // Retorna o ID do folder atualizado
+            return { updatedFolder: result.value.library[folderIndex], error: null };
+        } catch (error) {
+            return { updatedFolder: null, error: 'Erro interno do servidor' };
         }
     }
 }

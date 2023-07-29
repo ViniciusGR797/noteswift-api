@@ -196,8 +196,8 @@ router.get('/name/:folder_name', authMiddleware, FolderController.getFolderByNam
  * @swagger
  * /folders:
  *   post:
- *     summary: Cria uma nova folder
- *     description: Cria uma nova folder com base nos dados fornecidos no corpo da requisição.
+ *     summary: Cria uma nova pasta
+ *     description: Cria uma nova pasta com base nos dados fornecidos no corpo da requisição.
  *     tags:
  *       - Folder
  *     operationId: create_folder
@@ -239,5 +239,76 @@ router.get('/name/:folder_name', authMiddleware, FolderController.getFolderByNam
  */
 
 router.post('/', authMiddleware, FolderController.createFolder);
+
+/**
+ * @swagger
+ * /folders/{folder_id}:
+ *   parameters:
+ *     - name: folder_id
+ *       in: path
+ *       required: true
+ *       description: ID da pasta que será atualizada
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Atualiza pasta
+ *     description: Atualiza as informações da pasta desejada
+ *     tags:
+ *       - Folder
+ *     operationId: update_folder
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/FolderUpdate"
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Folder"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/:folder_id', authMiddleware, FolderController.updateFolder);
 
 export default router;

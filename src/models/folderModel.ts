@@ -1,7 +1,8 @@
-import { IsString, IsBoolean, IsNotEmpty, IsInt, Min, ArrayNotEmpty, ValidateNested } from 'class-validator';
+import { IsString, IsBoolean, IsNotEmpty, IsInt, Min, ArrayNotEmpty, ValidateNested, Matches } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ObjectId } from "mongodb";
 import { Note, noteDefault } from './noteModel';
+import { IsObjectId } from '../utils/validate';
 
 /**
  * @swagger
@@ -54,6 +55,7 @@ import { Note, noteDefault } from './noteModel';
  */
 
 class Folder {
+  @IsObjectId({ message: 'O campo _id deve ser um ObjectId válido' })
   @IsNotEmpty({ message: 'O campo _id é obrigatório' })
   _id: ObjectId;
 
@@ -67,11 +69,14 @@ class Folder {
 
   @IsString({ message: 'O campo color deve ser uma string' })
   @IsNotEmpty({ message: 'O campo color é obrigatório' })
+  @Matches(/^#[0-9A-Fa-f]{6}$/, {
+    message: 'O campo "color" deve ser um valor hexadecimal válido no formato "#RRGGBB" (ex: #FF0000).',
+  })
   color: string;
 
   @IsInt({ message: 'O campo order deve ser um número inteiro' })
   @IsNotEmpty({ message: 'O campo order é obrigatório' })
-  @Min(0, { message: 'O campo order deve ser maior ou igual a 0' })
+  @Min(1, { message: 'O campo order deve ser maior ou igual a 1' })
   order: number;
 
   @IsNotEmpty({ message: 'O campo notes é obrigatório' })
@@ -123,7 +128,6 @@ class FolderCreate {
  *       required:
  *         - name
  *         - color
- *         - order
  *       properties:
  *         name:
  *           type: string
@@ -133,10 +137,6 @@ class FolderCreate {
  *           type: string
  *           description: Cor da pasta
  *           example: "#FF0000"
- *         order:
- *           type: integer
- *           description: Ordem da pasta
- *           example: 1
  */
 
 class FolderUpdate {
@@ -146,16 +146,59 @@ class FolderUpdate {
 
   @IsString({ message: 'O campo color deve ser uma string' })
   @IsNotEmpty({ message: 'O campo color é obrigatório' })
+  @Matches(/^#[0-9A-Fa-f]{6}$/, {
+    message: 'O campo "color" deve ser um valor hexadecimal válido no formato "#RRGGBB" (ex: #FF0000).',
+  })
   color: string;
+
+  constructor(payload: FolderUpdate) {
+    this.name = typeof payload.name === 'string' ? payload.name.trim() : payload.name;
+    this.color = typeof payload.color === 'string' ? payload.color.trim() : payload.color;
+  }
+}
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     LibraryOrder:
+ *       type: array
+ *       items:
+ *         $ref: "#/components/schemas/FolderOrder"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     FolderOrder:
+ *       type: object
+ *       required:
+ *         - _id
+ *         - order
+ *       properties:
+ *         _id:
+ *           type: ObjectId
+ *           description: Identificador único da pasta
+ *           example: "6123456789abcdef01234567"
+ *         order:
+ *           type: integer
+ *           description: Ordem da pasta
+ *           example: 1
+ */
+
+class FolderOrder {
+  @IsObjectId({ message: 'O campo _id deve ser um ObjectId válido' })
+  @IsNotEmpty({ message: 'O campo _id é obrigatório' })
+  _id: ObjectId;
 
   @IsInt({ message: 'O campo order deve ser um número inteiro' })
   @IsNotEmpty({ message: 'O campo order é obrigatório' })
-  @Min(0, { message: 'O campo order deve ser maior ou igual a 0' })
+  @Min(1, { message: 'O campo order deve ser maior ou igual a 1' })
   order: number;
 
-  constructor(payload: Folder) {
-    this.name = typeof payload.name === 'string' ? payload.name.trim() : payload.name;
-    this.color = typeof payload.color === 'string' ? payload.color.trim() : payload.color;
+  constructor(payload: FolderOrder) {
+    this._id = payload._id;
     this.order = payload.order;
   }
 }
@@ -218,4 +261,4 @@ const coresDarkMode = [
   "#7D88EB", // Azul Escuro
 ];
 
-export { Folder, FolderCreate, FolderUpdate, folderDefault, coresDefault, coresLightMode, coresDarkMode };
+export { Folder, FolderCreate, FolderUpdate, FolderOrder, folderDefault, coresDefault, coresLightMode, coresDarkMode };

@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { ObjectId } from "mongodb";
 import { Folder } from './folderModel';
 import { UserConfig } from './userConfigModel';
+import { IsObjectId } from '../utils/validate';
 
 /**
  * @swagger
@@ -43,6 +44,7 @@ import { UserConfig } from './userConfigModel';
  */
 
 class User {
+  @IsObjectId({ message: 'O campo _id deve ser um ObjectId válido' })
   @IsNotEmpty({ message: 'O campo _id é obrigatório' })
   _id: ObjectId;
 
@@ -54,11 +56,11 @@ class User {
   @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
-  @IsString()
+  @IsString({ message: 'O campo pwd é obrigatório' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
   @ValidateNested({ each: true })
@@ -116,11 +118,11 @@ class UserUpsert {
   @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
-  @IsString()
+  @IsString({ message: 'O campo pwd é obrigatório' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
   constructor(payload: UserUpsert) {
@@ -155,11 +157,11 @@ class UserLogin {
   @IsNotEmpty({ message: 'O campo email é obrigatório' })
   email: string;
 
-  @IsString()
+  @IsString({ message: 'O campo pwd é obrigatório' })
+  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, {
     message: 'Senha fraca. A senha deve ter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@ $ ! % * ? &)',
   })
-  @IsNotEmpty({ message: 'O campo pwd é obrigatório' })
   pwd: string;
 
   constructor(payload: UserLogin) {

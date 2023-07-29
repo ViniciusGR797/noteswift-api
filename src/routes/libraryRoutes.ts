@@ -64,6 +64,70 @@ router.get('/', authMiddleware, LibraryController.getLibrary);
 
 /**
  * @swagger
+ * /libraries/order:
+ *   put:
+ *     summary: Atualiza ordem da biblioteca
+ *     description: Atualiza as informações ordem da biblioteca
+ *     tags:
+ *       - Library
+ *     operationId: update_order_library
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/LibraryOrder"
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Library"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/order', authMiddleware, LibraryController.updateOrderLibrary);
+
+/**
+ * @swagger
  * /libraries:
  *   delete:
  *     summary: Remove biblioteca de pastas

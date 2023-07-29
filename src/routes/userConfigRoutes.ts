@@ -71,6 +71,12 @@ router.get('/', authMiddleware, UserConfigController.getUserConfig);
  *     tags:
  *       - Config
  *     operationId: update_user_config
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/UserConfig"
  *     security:
  *       - jwt: []
  *     responses:

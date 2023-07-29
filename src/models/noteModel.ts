@@ -1,6 +1,7 @@
 import { IsString, IsBoolean, IsNotEmpty, Matches } from 'class-validator';
 import { ObjectId } from "mongodb";
 import moment from 'moment-timezone';
+import { IsObjectId } from '../utils/validate';
 
 /**
  * @swagger
@@ -47,6 +48,7 @@ import moment from 'moment-timezone';
  */
 
 class Note {
+  @IsObjectId({ message: 'O campo _id deve ser um ObjectId válido' })
   @IsNotEmpty({ message: 'O campo _id é obrigatório' })
   _id: ObjectId;
 
