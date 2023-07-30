@@ -3,9 +3,11 @@ import { sendEmail, EmailOptions, TemplateEmail } from '../utils/email';
 import { ObjectId } from 'mongodb';
 import { isDefined, validate } from 'class-validator';
 import { NoteService } from '../services/noteService';
-import { Note, NoteCreate, NoteMove, NoteUpdate } from '../models/noteModel';
+import { Note, NoteCreate, NoteDownload, NoteMove, NoteUpdate } from '../models/noteModel';
 import moment from 'moment';
 import { FolderService } from '../services/folderService';
+import { TemplatePDF, generatePDF } from '../utils/pdf';
+import { LibraryService } from '../services/libraryService';
 
 export class NoteController {
     static async getNoteById(req: Request, res: Response): Promise<Response> {
@@ -82,6 +84,64 @@ export class NoteController {
         }
 
         return res.status(201).json(note);
+    }
+
+    static async downloadNote(req: Request, res: Response): Promise<Response> {
+        // ID do usuário obtido pelo middleware de autenticação
+        const user_id = req.user_id;
+
+        const payload: NoteDownload[] = req.body.map((data: any) => new NoteDownload(data));
+
+        // Validar cada item do payload individualmente
+        for (const item of payload) {
+            const itemErrors = await validate(item);
+            if (itemErrors.length > 0) {
+                const firstError = itemErrors[0];
+                const errorMessage = firstError.constraints ? Object.values(firstError.constraints)[0] : 'Alguns parâmetros podem estar faltando ou serem inválidos';
+                return res.status(400).json({ msg: errorMessage });
+            }
+        }
+
+        // Garantir que os valores de _id de note existem e são únicos, além de popular com dados
+        const notes = [];
+        const uniqueIds = new Set<string>();
+        for (const item of payload) {
+            const { note, error } = await NoteService.getNoteById(user_id, item._id.toString());
+            if (error) {
+                return res.status(500).json({ msg: error });
+            }
+            if (!note) {
+                return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+            }
+            if (uniqueIds.has(item._id.toString())) {
+                return res.status(400).json({ msg: 'Os valores de _id de anotação devem ser únicos, evitar repetição de dados no PDF' });
+            }
+
+            uniqueIds.add(item._id.toString());
+            notes.push(note);
+        }
+
+        // Pega library do user
+        const { library, error } = await LibraryService.getLibrary(user_id);
+        if (error) {
+            return res.status(500).json({ msg: error });
+        }
+        if (!library || library.length === 0) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        // Filtrar as pastas que contêm anotações presentes no payload
+        const foldersWithNotes = library
+            .filter((folder: any) => folder.notes.some((note: any) => payload.some((item) => item._id.toString() === note._id.toString())))
+            .map((folder: any) => ({
+                ...folder,
+                notes: folder.notes.filter((note: any) => payload.some((item) => item._id.toString() === note._id.toString()))
+            }));
+
+        const filename = 'download_note.pdf'
+        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteTemplate, filename,);
+
+        return res.status(200).json(foldersWithNotes);
     }
 
     static async updateNote(req: Request, res: Response): Promise<Response> {

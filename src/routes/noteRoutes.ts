@@ -81,7 +81,7 @@ router.get('/:note_id', authMiddleware, NoteController.getNoteById);
  * /notes:
  *   post:
  *     summary: Cria uma nova anotação
- *     description: Cria uma nova anotação com base nos dados fornecidos no corpo da requisição.
+ *     description: Cria uma nova anotação com base nos dados fornecidos no corpo da requisição
  *     tags:
  *       - Note
  *     operationId: create_note
@@ -123,6 +123,54 @@ router.get('/:note_id', authMiddleware, NoteController.getNoteById);
  */
 
 router.post('/', authMiddleware, NoteController.createNote);
+
+/**
+ * @swagger
+ * /notes/download:
+ *   post:
+ *     summary: Cria um arquivo PDF de anotações 
+ *     description: Cria um arquivo PDF de anotações com base nos dados fornecidos no corpo da requisição
+ *     tags:
+ *       - Note
+ *     operationId: download_note
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/NoteList"
+ *     responses:
+ *       201:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Bin"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.post('/download', authMiddleware, NoteController.downloadNote);
 
 /**
  * @swagger

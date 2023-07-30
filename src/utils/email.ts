@@ -1,3 +1,4 @@
+import fs from 'fs';
 import nodemailer from 'nodemailer';
 import config from '../config';
 
@@ -19,6 +20,7 @@ export interface EmailOptions {
   subject: string;
   text?: string; // Conteúdo em texto
   html?: string; // Conteúdo em formato HTML
+  attachments?: { filename: string; path: string }[]; // Array de anexos
 }
 
 // Função para enviar o e-mail
@@ -28,7 +30,16 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
   options.replyTo = options.replyTo || config.email.auth.user;
 
   try {
+    // Enviar o e-mail com os anexos, se houver
     await transporter.sendMail(options);
+
+    // Se houver anexos, remover o arquivo após o envio do e-mail
+    if (options.attachments) {
+      options.attachments.forEach((attachment) => {
+        fs.unlinkSync(attachment.path);
+      });
+    }
+
     console.log('E-mail enviado com sucesso!');
   } catch (error) {
     console.error('Erro ao enviar o e-mail:', error);
@@ -122,6 +133,26 @@ export class TemplateEmail {
             <p style="color: #333333;">NoteSwift</p>
         </div>  
         `;
+
+    return emailBody;
+  }
+
+  static backupBinTemplate(user: any, bin: any[]): string {
+    const emailBody = `
+          <div style="font-family: 'Montserrat', Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              <h1 style="color: #333333; text-align: center; margin-bottom: 20px;">Backup Lixeira</h1>
+              <p style="color: #333333;">Olá ${user.name},</p>
+              <p style="color: #333333;">Recebemos uma solicitação de backup da lixeira.</p>
+              <p style="color: #333333;">Ao final desta mensagem, você encontrará os anexos contendo o backup no formato PDF, caso prefira essa opção.</p>
+              <h2 style="color: #333333; margin-top: 30px;">Aqui estão os dados da sua lixeira:</h2>
+              <div style="background-color: #ffffff; padding: 20px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 20px;">
+              <h3 style="color: #333333; margin-top: 15px;">Lixeira:</h3>
+              <pre style="background-color: #f0f0f0; padding: 10px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 10px;">${JSON.stringify(bin, null, 2)}</pre>    
+              </div>
+              <p style="color: #333333;">Atenciosamente,</p>
+              <p style="color: #333333;">NoteSwift</p>
+          </div>  
+          `;
 
     return emailBody;
   }

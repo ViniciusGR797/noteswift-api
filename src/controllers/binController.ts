@@ -6,7 +6,8 @@ import { validate } from 'class-validator';
 import { ObjectId, ProfilingLevel } from 'mongodb';
 import { BinService } from '../services/binService';
 import { NoteService } from '../services/noteService';
-import { generatePDF } from '../utils/pdf';
+import { TemplatePDF, generatePDF } from '../utils/pdf';
+import { UserService } from '../services/userService';
 
 export class BinController {
     static async getBin(req: Request, res: Response): Promise<Response> {
@@ -28,6 +29,7 @@ export class BinController {
         // ID do usuário obtido pelo middleware de autenticação
         const user_id = req.user_id;
 
+        // Busca anotações da lixeira
         const { bin, error } = await BinService.getBin(user_id);
         if (error) {
             return res.status(500).json({ msg: error });
@@ -36,7 +38,32 @@ export class BinController {
             return res.status(404).json({ msg: 'Nenhum dado encontrado' });
         }
 
-        generatePDF(bin, 'trashed_notes.pdf');
+        // Busca dados do user
+        const { user, error: userError } = await UserService.getUserById(user_id);
+        if (userError) {
+            return res.status(500).json({ msg: userError });
+        }
+        if (!user) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        const filename = 'backup_bin.pdf'
+        generatePDF(bin, TemplatePDF.backupBinTemplate, filename,);
+
+        const emailOptions: EmailOptions = {
+            to: user.email,
+            subject: 'Backup lixeira',
+            html: TemplateEmail.backupBinTemplate(user, bin),
+            attachments: [
+                {
+                    filename: filename, // Nome do arquivo de anexo
+                    path: filename, // Caminho do arquivo gerado pelo PDF
+                },
+            ],
+        };
+
+        sendEmail(emailOptions);
+
 
         return res.status(200).json(bin);
     }

@@ -223,6 +223,41 @@ class NoteMove {
  *         $ref: "#/components/schemas/Note"
  */
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NoteList:
+ *       type: array
+ *       items:
+ *         $ref: "#/components/schemas/NoteDownload"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NoteDownload:
+ *       type: object
+ *       required:
+ *         - _id
+ *       properties:
+ *         _id:
+ *           type: ObjectId
+ *           description: Identificador único da nota
+ *           example: "6123456789abcdef01234567"
+ */
+
+class NoteDownload {
+  @IsObjectId({ message: 'O campo _id deve ser um ObjectId válido' })
+  @IsNotEmpty({ message: 'O campo _id é obrigatório' })
+  _id: ObjectId;
+
+  constructor(payload: NoteDownload) {
+    this._id = payload._id;
+  }
+}
+
 // Define a note padrão
 const noteDefault = {
   _id: new ObjectId(),
@@ -234,4 +269,4 @@ const noteDefault = {
   update_at: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'),
 };
 
-export { Note, NoteCreate, NoteUpdate, NoteMove, noteDefault };
+export { Note, NoteCreate, NoteUpdate, NoteMove, NoteDownload, noteDefault };
