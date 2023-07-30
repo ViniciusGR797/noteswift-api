@@ -266,4 +266,134 @@ router.put('/:note_id', authMiddleware, NoteController.updateNote);
 
 router.put('/moved/:note_id', authMiddleware, NoteController.moveNote);
 
+/**
+ * @swagger
+ * /notes/trash/{note_id}:
+ *   parameters:
+ *     - name: note_id
+ *       in: path
+ *       required: true
+ *       description: ID da anotação que será movida para lixeira
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Mover anotação para lixeira
+ *     description: Reciclar anotação para lixeira
+ *     tags:
+ *       - Note
+ *     operationId: trash_note
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Note"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/trash/:note_id', authMiddleware, NoteController.trashNote);
+
+/**
+ * @swagger
+ * /notes/restore/{note_id}:
+ *   parameters:
+ *     - name: note_id
+ *       in: path
+ *       required: true
+ *       description: ID da anotação que será recuperada da lixeira
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Recuperar anotação da lixeira
+ *     description: Recuperar anotação em que se encontra na lixeira
+ *     tags:
+ *       - Note
+ *     operationId: restore_note
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Note"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/restore/:note_id', authMiddleware, NoteController.restoreNote);
+
 export default router;

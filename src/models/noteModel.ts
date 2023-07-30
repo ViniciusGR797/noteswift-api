@@ -36,7 +36,7 @@ import { IsObjectId } from '../utils/validate';
  *         trashed:
  *           type: boolean
  *           description: Indica se a nota está na lixeira
- *           example: false
+ *           example: true
  *         deleted_date:
  *           type: string
  *           description: Data de exclusão da nota

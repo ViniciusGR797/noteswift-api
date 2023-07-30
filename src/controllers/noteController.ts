@@ -179,4 +179,76 @@ export class NoteController {
 
         return res.status(200).json({ msg: 'Movida com sucesso' });
     }
+
+    static async trashNote(req: Request, res: Response): Promise<Response> {
+        // ID do usuário obtido pelo middleware de autenticação
+        const user_id = req.user_id;
+
+        const note_id = req.params.note_id;
+
+        // Valida parâmetro
+        if (!ObjectId.isValid(note_id)) {
+            return res.status(400).json({ msg: 'O parâmetro note_id não está no formato correto de ObjectID' });
+        }
+
+        // Busca a note 
+        const { note, error: getNoteError } = await NoteService.getNoteById(user_id, note_id);
+        if (getNoteError) {
+            return res.status(500).json({ msg: getNoteError });
+        }
+        if (!note) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        // Marca anotação na lixeira e dá 2 semanas para ser excluida definitivamente
+        note.trashed = true;
+        note.deleted_date = moment().tz('America/Sao_Paulo').add(2, 'week').format('YYYY-MM-DD HH:mm:ss');
+
+        // Salva as alterações no banco de dados
+        const { updatedNote, error: updateNoteError } = await NoteService.updateNote(user_id, note);
+        if (updateNoteError) {
+            return res.status(500).json({ msg: updateNoteError });
+        }
+        if (!updatedNote) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        return res.status(200).json(updatedNote);
+    }
+
+    static async restoreNote(req: Request, res: Response): Promise<Response> {
+        // ID do usuário obtido pelo middleware de autenticação
+        const user_id = req.user_id;
+
+        const note_id = req.params.note_id;
+
+        // Valida parâmetro
+        if (!ObjectId.isValid(note_id)) {
+            return res.status(400).json({ msg: 'O parâmetro note_id não está no formato correto de ObjectID' });
+        }
+
+        // Busca a note 
+        const { note, error: getNoteError } = await NoteService.getNoteById(user_id, note_id);
+        if (getNoteError) {
+            return res.status(500).json({ msg: getNoteError });
+        }
+        if (!note) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        // Marca anotação na lixeira e dá 2 semanas para ser excluida definitivamente
+        note.trashed = false;
+        note.deleted_date = '';
+
+        // Salva as alterações no banco de dados
+        const { updatedNote, error: updateNoteError } = await NoteService.updateNote(user_id, note);
+        if (updateNoteError) {
+            return res.status(500).json({ msg: updateNoteError });
+        }
+        if (!updatedNote) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        return res.status(200).json(updatedNote);
+    }
 }
