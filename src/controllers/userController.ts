@@ -4,7 +4,7 @@ import { userConfigDefault } from '../models/userConfigModel';
 import { UserService } from '../services/userService';
 import { Password } from '../securities/password';
 import { Token } from '../securities/token';
-import { sendEmail, EmailOptions, Template } from '../utils/email';
+import { sendEmail, EmailOptions, TemplateEmail } from '../utils/email';
 import { UserUpsert, User, UserLogin } from '../models/userModel';
 import { validate } from 'class-validator';
 import { ObjectId } from "mongodb";
@@ -174,7 +174,7 @@ export class UserController {
     const emailOptions: EmailOptions = {
       to: deletedUser.email,
       subject: 'Conta do usuário apagada',
-      html: Template.deleteUserTemplate(deletedUser),
+      html: TemplateEmail.deleteUserTemplate(deletedUser),
     };
 
     sendEmail(emailOptions);

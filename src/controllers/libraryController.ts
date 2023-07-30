@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { LibraryService } from '../services/libraryService';
-import { sendEmail, EmailOptions, Template } from '../utils/email';
+import { sendEmail, EmailOptions, TemplateEmail } from '../utils/email';
 import { FolderOrder } from '../models/folderModel';
 import { validate } from 'class-validator';
 import { ObjectId, ProfilingLevel } from 'mongodb';
@@ -127,7 +127,7 @@ export class LibraryController {
     const emailOptions: EmailOptions = {
       to: deletedUserWithoutLibrary.email,
       subject: 'Bibliteca apagada',
-      html: Template.deleteLibraryTemplate(deletedUserWithoutLibrary),
+      html: TemplateEmail.deleteLibraryTemplate(deletedUserWithoutLibrary),
     };
 
     sendEmail(emailOptions);

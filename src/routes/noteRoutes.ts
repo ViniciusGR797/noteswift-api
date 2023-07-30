@@ -93,7 +93,7 @@ router.get('/:note_id', authMiddleware, NoteController.getNoteById);
  *             $ref: "#/components/schemas/NoteCreate"
  *     responses:
  *       201:
- *         description: Usuário criado com sucesso.
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { FolderService } from '../services/folderService';
-import { sendEmail, EmailOptions, Template } from '../utils/email';
+import { sendEmail, EmailOptions, TemplateEmail } from '../utils/email';
 import { ObjectId } from 'mongodb';
 import { Folder, FolderCreate, FolderUpdate, coresDefault } from '../models/folderModel';
 import { validate } from 'class-validator';
@@ -207,7 +207,7 @@ export class FolderController {
         const emailOptions: EmailOptions = {
             to: deletedUserWithoutFolder.email,
             subject: 'Pasta apagada',
-            html: Template.deleteFolderTemplate(deletedUserWithoutFolder),
+            html: TemplateEmail.deleteFolderTemplate(deletedUserWithoutFolder),
         };
 
         sendEmail(emailOptions);

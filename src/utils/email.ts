@@ -35,7 +35,7 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
   }
 }
 
-export class Template {
+export class TemplateEmail {
   static deleteUserTemplate(user: any): string {
     const emailBody = `
             <div style="font-family: 'Montserrat', Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">

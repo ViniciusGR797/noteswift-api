@@ -209,7 +209,7 @@ router.get('/name/:folder_name', authMiddleware, FolderController.getFolderByNam
  *             $ref: "#/components/schemas/FolderCreate"
  *     responses:
  *       201:
- *         description: Usuário criado com sucesso.
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:

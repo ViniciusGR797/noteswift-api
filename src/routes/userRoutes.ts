@@ -79,7 +79,7 @@ router.get('/', authMiddleware, UserController.getUserMe);
  *             $ref: "#/components/schemas/UserUpsert"
  *     responses:
  *       201:
- *         description: Usuário criado com sucesso.
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:
@@ -127,7 +127,7 @@ router.post('/', UserController.createUser);
  *             $ref: "#/components/schemas/UserLogin"
  *     responses:
  *       200:
- *         description: Usuário autenticado com sucesso.
+ *         description: Success
  *         content:
  *           application/json:
  *             schema:

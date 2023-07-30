@@ -2,6 +2,13 @@
  * @swagger
  * components:
  *   schemas:
+ *     RestoreSuccess:
+ *       type: object
+ *       properties:
+ *         msg:
+ *           type: string
+ *           description: Mensagem de sucesso ao recuperar toda lixeira
+ *           example: "Recuperado com sucesso"
  *     MoveSuccess:
  *       type: object
  *       properties:

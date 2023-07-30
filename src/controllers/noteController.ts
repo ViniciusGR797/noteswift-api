@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendEmail, EmailOptions, Template } from '../utils/email';
+import { sendEmail, EmailOptions, TemplateEmail } from '../utils/email';
 import { ObjectId } from 'mongodb';
 import { isDefined, validate } from 'class-validator';
 import { NoteService } from '../services/noteService';
@@ -236,7 +236,7 @@ export class NoteController {
             return res.status(404).json({ msg: 'Nenhum dado encontrado' });
         }
 
-        // Marca anotação na lixeira e dá 2 semanas para ser excluida definitivamente
+        // Retira marcação e deleted_date
         note.trashed = false;
         note.deleted_date = '';
 
@@ -284,7 +284,7 @@ export class NoteController {
         const emailOptions: EmailOptions = {
             to: deletedUserWithoutNote.email,
             subject: 'Anotação apagada',
-            html: Template.deleteNoteTemplate(deletedUserWithoutNote),
+            html: TemplateEmail.deleteNoteTemplate(deletedUserWithoutNote),
         };
 
         sendEmail(emailOptions);

@@ -213,6 +213,16 @@ class NoteMove {
   }
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Bin:
+ *       type: array
+ *       items:
+ *         $ref: "#/components/schemas/Note"
+ */
+
 // Define a note padrão
 const noteDefault = {
   _id: new ObjectId(),
