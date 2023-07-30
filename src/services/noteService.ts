@@ -175,4 +175,53 @@ export class NoteService {
         }
     }
 
+    // Função para remover a anotação
+    static async deleteNote(user_id: string, note_id: string): Promise<{ deletedUserWithoutNote: any | null; error: string | null }> {
+        try {
+            const db = getDB();
+            const collection = db.collection('users');
+
+            // Encontra o usuário no banco de dados pelo ID
+            const user = await collection.findOne({ _id: new ObjectId(user_id) });
+
+            // Verifica se o usuário foi encontrado
+            if (!user) {
+                return { deletedUserWithoutNote: null, error: null };
+            }
+
+            let noteToDelete = null;
+            // Procura a nota a ser removida dentro das pastas do usuário
+            for (const folder of user.library) {
+                const note = folder.notes.find((note: any) => note._id.equals(new ObjectId(note_id)));
+                if (note) {
+                    noteToDelete = note;
+                    // Remove a nota da lista de notas da pasta
+                    folder.notes = folder.notes.filter((note: any) => !note._id.equals(new ObjectId(note_id)));
+                    break;
+                }
+            }
+
+            if (!noteToDelete) {
+                return { deletedUserWithoutNote: null, error: null };
+            }
+
+            // Atualiza o usuário no banco de dados após remover a nota
+            await collection.updateOne({ _id: new ObjectId(user_id) }, { $set: { library: user.library } });
+
+            // Pega user com apenas note apagada para mandar por email
+            const deletedUserWithoutNote = {
+                "_id": user._id,
+                "name": user.name,
+                "email": user.email,
+                "library": [{
+                    "notes": [noteToDelete]
+                }]
+            }            
+
+            // Retorna a nota removida
+            return { deletedUserWithoutNote: deletedUserWithoutNote, error: null };
+        } catch (error) {
+            return { deletedUserWithoutNote: null, error: 'Erro interno do servidor' };
+        }
+    }
 }

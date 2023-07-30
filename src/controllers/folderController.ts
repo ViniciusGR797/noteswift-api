@@ -191,28 +191,28 @@ export class FolderController {
             return res.status(404).json({ msg: 'Nenhum dado encontrado' });
         }
 
-        if (folder._id.equals(new ObjectId(folder_id))){
+        if (folder._id.equals(new ObjectId(folder_id))) {
             return res.status(400).json({ msg: 'A pasta default não pode ser deletada' });
         }
 
         // Remove a pasta
         const { deletedUserWithoutFolder, error: deleteFolderError } = await FolderService.deleteFolder(user_id, folder_id);
         if (deleteFolderError) {
-          return res.status(500).json({ msg: deleteFolderError });
+            return res.status(500).json({ msg: deleteFolderError });
         }
         if (!deletedUserWithoutFolder) {
-          return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
         }
-    
+
         const emailOptions: EmailOptions = {
-          to: deletedUserWithoutFolder.email,
-          subject: 'Pasta apagada',
-          html: Template.deleteFolderTemplate(deletedUserWithoutFolder),
+            to: deletedUserWithoutFolder.email,
+            subject: 'Pasta apagada',
+            html: Template.deleteFolderTemplate(deletedUserWithoutFolder),
         };
-    
+
         sendEmail(emailOptions);
-    
+
         // Retorna mensagem de sucesso
         return res.status(200).json({ msg: 'Excluído com sucesso' });
-      }
+    }
 }

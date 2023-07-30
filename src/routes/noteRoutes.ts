@@ -396,4 +396,62 @@ router.put('/trash/:note_id', authMiddleware, NoteController.trashNote);
 
 router.put('/restore/:note_id', authMiddleware, NoteController.restoreNote);
 
+/**
+ * @swagger
+ * /notes/{note_id}:
+ *   parameters:
+ *     - name: note_id
+ *       in: path
+ *       required: true
+ *       description: ID da anotação que será deletada
+ *       schema:
+ *         type: string
+ *   delete:
+ *     summary: Remove anotação
+ *     description: Apaga dados de anotação
+ *     tags:
+ *       - Note
+ *     operationId: delete_note
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/DeleteSuccess"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.delete('/:note_id', authMiddleware, NoteController.deleteNote);
+
 export default router;

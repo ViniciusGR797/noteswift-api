@@ -150,7 +150,7 @@ export class NoteController {
             return res.status(400).json({ msg: errorMessage });
         }
 
-        // Garantir que o folder_id é existe
+        // Garantir que o folder_id existe
         const { folder, error } = await FolderService.getFolderById(user_id, payload.folder_id.toString());
         if (error) {
             return res.status(500).json({ msg: error });
@@ -159,7 +159,7 @@ export class NoteController {
             return res.status(404).json({ msg: 'Nenhuma pasta encontrada com esse folder_id passado' });
         }
 
-        // Garantir que o note_id é existe
+        // Garantir que o note_id existe
         const { note, error: getNoteError } = await NoteService.getNoteById(user_id, note_id);
         if (getNoteError) {
             return res.status(500).json({ msg: getNoteError });
@@ -250,5 +250,46 @@ export class NoteController {
         }
 
         return res.status(200).json(updatedNote);
+    }
+
+    static async deleteNote(req: Request, res: Response): Promise<Response> {
+        // ID do usuário obtido pelo middleware de autenticação
+        const user_id = req.user_id;
+
+        const note_id = req.params.note_id;
+
+        // Valida parâmetro
+        if (!ObjectId.isValid(note_id)) {
+            return res.status(400).json({ msg: 'O parâmetro note_id não está no formato correto de ObjectID' });
+        }
+
+        // Garantir que o note_id existe
+        const { note, error: getNoteError } = await NoteService.getNoteById(user_id, note_id);
+        if (getNoteError) {
+            return res.status(500).json({ msg: getNoteError });
+        }
+        if (!note) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        // Remove a anotação
+        const { deletedUserWithoutNote, error: deleteNoteError } = await NoteService.deleteNote(user_id, note_id);
+        if (deleteNoteError) {
+            return res.status(500).json({ msg: deleteNoteError });
+        }
+        if (!deletedUserWithoutNote) {
+            return res.status(404).json({ msg: 'Nenhum dado encontrado' });
+        }
+
+        const emailOptions: EmailOptions = {
+            to: deletedUserWithoutNote.email,
+            subject: 'Anotação apagada',
+            html: Template.deleteNoteTemplate(deletedUserWithoutNote),
+        };
+
+        sendEmail(emailOptions);
+
+        // Retorna mensagem de sucesso
+        return res.status(200).json({ msg: 'Excluído com sucesso' });
     }
 }

@@ -89,7 +89,7 @@ export class Template {
   static deleteFolderTemplate(user: any): string {
     const emailBody = `
         <div style="font-family: 'Montserrat', Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <h1 style="color: #333333; text-align: center; margin-bottom: 20px;">Conta Excluída</h1>
+            <h1 style="color: #333333; text-align: center; margin-bottom: 20px;">Pasta Excluída</h1>
             <p style="color: #333333;">Olá ${user.name},</p>
             <p style="color: #333333;">Recebemos uma solicitação para excluir a pasta <strong>${user.library[0].name}</strong> da sua conta.</p>
             <p style="color: #333333;">Infelizmente, a sua conta com ID ${user._id} teve a pasta excluída com sucesso.</p>
@@ -97,6 +97,26 @@ export class Template {
             <div style="background-color: #ffffff; padding: 20px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 20px;">
             <h3 style="color: #333333; margin-top: 15px;">Pasta:</h3>
             <pre style="background-color: #f0f0f0; padding: 10px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 10px;">${JSON.stringify(user.library[0], null, 2)}</pre>      
+            </div>
+            <p style="color: #333333;">Atenciosamente,</p>
+            <p style="color: #333333;">NoteSwift</p>
+        </div>  
+        `;
+
+    return emailBody;
+  }
+
+  static deleteNoteTemplate(user: any): string {
+    const emailBody = `
+        <div style="font-family: 'Montserrat', Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <h1 style="color: #333333; text-align: center; margin-bottom: 20px;">Anotação Excluída</h1>
+            <p style="color: #333333;">Olá ${user.name},</p>
+            <p style="color: #333333;">Recebemos uma solicitação para excluir a anotação <strong>${user.library[0].notes[0].title}</strong> da sua conta.</p>
+            <p style="color: #333333;">Infelizmente, a sua conta com ID ${user._id} teve a anotação excluída com sucesso.</p>
+            <h2 style="color: #333333; margin-top: 30px;">Aqui estão os dados da anotação apagada do seu perfil:</h2>
+            <div style="background-color: #ffffff; padding: 20px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 20px;">
+            <h3 style="color: #333333; margin-top: 15px;">Anotação:</h3>
+            <pre style="background-color: #f0f0f0; padding: 10px; border: 1px solid #cccccc; border-radius: 5px; margin-bottom: 10px;">${JSON.stringify(user.library[0].notes[0], null, 2)}</pre>      
             </div>
             <p style="color: #333333;">Atenciosamente,</p>
             <p style="color: #333333;">NoteSwift</p>
