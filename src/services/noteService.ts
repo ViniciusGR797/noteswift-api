@@ -31,12 +31,12 @@ export class NoteService {
             const db = getDB();
             const collection = db.collection("users");
             const user = await collection.findOne({ _id: new ObjectId(user_id) });
-    
+
             // Verificar se o usuário foi encontrado no banco de dados
             if (!user) {
                 return { createdNoteID: "", error: null };
             }
-    
+
             // Encontrar a pasta na library com base no folder_id
             const folderToUpdate = user.library.find((folder: any) => folder._id.equals(new ObjectId(folder_id)));
 
@@ -44,26 +44,135 @@ export class NoteService {
             if (!folderToUpdate) {
                 return { createdNoteID: "", error: null };
             }
-    
+
             // Adicionar a nova anotação (data) à lista de notas da pasta
             folderToUpdate.notes.push(data);
-    
+
             // Atualizar o usuário no banco de dados e retornar o documento atualizado após a atualização
             const result = await collection.findOneAndUpdate(
                 { _id: new ObjectId(user_id) },
                 { $set: { library: user.library } },
                 { returnDocument: 'after' }
             );
-    
+
             // Verificar se o usuário foi encontrado e atualizado
             if (!result.value) {
                 return { createdNoteID: "", error: null };
             }
-    
+
             // Retorna o ID da nova anotação
             return { createdNoteID: folderToUpdate.notes[folderToUpdate.notes.length - 1]._id.toString(), error: null };
         } catch (error) {
             return { createdNoteID: "", error: 'Erro interno do servidor' };
         }
     }
+
+    // Função para atualizar note
+    static async updateNote(user_id: string, updatedNote: any): Promise<{ updatedNote: any | null; error: string | null }> {
+        try {
+            const db = getDB();
+            const collection = db.collection("users");
+            const user = await collection.findOne({ _id: new ObjectId(user_id) });
+
+            // Verificar se o usuário foi encontrado no banco de dados
+            if (!user) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Procurar a pasta que contém a nota a ser atualizada
+            const folderWithNote = user.library.find((folder: any) => folder.notes.some((note: any) => note._id.equals(updatedNote._id)));
+
+            // Verificar se a pasta foi encontrada
+            if (!folderWithNote) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Atualizar a nota dentro da pasta
+            folderWithNote.notes = folderWithNote.notes.map((note: any) => {
+                if (note._id.equals(updatedNote._id)) {
+                    return { ...note, ...updatedNote };
+                }
+                return note;
+            });
+
+            // Atualiza o usuário no banco de dados e retorna o documento atualizado após a atualização
+            const result = await collection.findOneAndUpdate(
+                { _id: new ObjectId(user_id) },
+                { $set: { library: user.library } },
+                { returnDocument: 'after' }
+            );
+
+            // Verifica se o usuário foi encontrado e atualizado
+            if (!result.value) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Procurar e retornar a nota atualizada
+            const updatedNoteFromResult = result.value.library.find((folder: any) => folder._id.equals(folderWithNote._id))?.notes.find((note: any) => note._id.equals(updatedNote._id));
+
+            return { updatedNote: updatedNoteFromResult, error: null };
+        } catch (error) {
+            return { updatedNote: null, error: 'Erro interno do servidor' };
+        }
+    }
+
+    // Função para mover note
+    static async moveNote(user_id: string, folder_id: string, note_id: string): Promise<{ updatedNote: any | null; error: string | null }> {
+        try {
+            const db = getDB();
+            const collection = db.collection("users");
+            const user = await collection.findOne({ _id: new ObjectId(user_id) });
+
+            // Verificar se o usuário foi encontrado no banco de dados
+            if (!user) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Encontrar a nota a ser movida na biblioteca do usuário
+            const noteToMove = user.library
+                .map((folder: any) => folder.notes.find((note: any) => note._id.equals(note_id)))
+                .find((note: any) => !!note);
+
+            // Verificar se a nota foi encontrada
+            if (!noteToMove) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Encontrar a pasta de destino na biblioteca do usuário
+            const destinationFolder = user.library.find((folder: any) => folder._id.equals(folder_id));
+
+            // Verificar se a pasta de destino foi encontrada
+            if (!destinationFolder) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Remover a nota da pasta de origem
+            for (const folder of user.library) {
+                folder.notes = folder.notes.filter((note: any) => !note._id.equals(note_id));
+            }
+
+            // Adicionar a nota na pasta de destino
+            destinationFolder.notes.push(noteToMove);
+
+            // Atualizar o usuário no banco de dados e retorna o documento atualizado após a atualização
+            const result = await collection.findOneAndUpdate(
+                { _id: new ObjectId(user_id) },
+                { $set: { library: user.library } },
+                { returnDocument: 'after' }
+            );
+
+            // Verifica se o usuário foi encontrado e atualizado
+            if (!result.value) {
+                return { updatedNote: null, error: null };
+            }
+
+            // Procurar e retornar a nota atualizada
+            const updatedNoteFromResult = result.value.library.find((folder: any) => folder._id.equals(folder_id))?.notes.find((note: any) => note._id.equals(note_id));
+
+            return { updatedNote: updatedNoteFromResult, error: null };
+        } catch (error) {
+            return { updatedNote: null, error: 'Erro interno do servidor' };
+        }
+    }
+
 }

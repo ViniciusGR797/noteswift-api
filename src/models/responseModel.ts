@@ -2,6 +2,13 @@
  * @swagger
  * components:
  *   schemas:
+ *     MoveSuccess:
+ *       type: object
+ *       properties:
+ *         msg:
+ *           type: string
+ *           description: Mensagem de sucesso ao mover
+ *           example: "Movida com sucesso"
  *     DeleteSuccess:
  *       type: object
  *       properties:

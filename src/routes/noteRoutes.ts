@@ -124,4 +124,146 @@ router.get('/:note_id', authMiddleware, NoteController.getNoteById);
 
 router.post('/', authMiddleware, NoteController.createNote);
 
+/**
+ * @swagger
+ * /notes/{note_id}:
+ *   parameters:
+ *     - name: note_id
+ *       in: path
+ *       required: true
+ *       description: ID da anotação que será atualizada
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Atualiza anotação
+ *     description: Atualiza as informações da anotação desejada
+ *     tags:
+ *       - Note
+ *     operationId: update_note
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/NoteUpdate"
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Note"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/:note_id', authMiddleware, NoteController.updateNote);
+
+/**
+ * @swagger
+ * /notes/moved/{note_id}:
+ *   parameters:
+ *     - name: note_id
+ *       in: path
+ *       required: true
+ *       description: ID da anotação que será movida
+ *       schema:
+ *         type: string
+ *   put:
+ *     summary: Mover anotação
+ *     description: Alterar pasta em que se encontra a anotação
+ *     tags:
+ *       - Note
+ *     operationId: move_note
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/NoteMove"
+ *     security:
+ *       - jwt: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/MoveSuccess"
+ *         links: [] 
+ *       400:
+ *         description: BadRequest
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/BadRequest"
+ *         links: [] 
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Unauthorized"
+ *         links: [] 
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Forbidden"
+ *         links: [] 
+ *       404:
+ *         description: NotFound
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/NotFound"
+ *         links: [] 
+ *       500:
+ *         description: InternalServerError
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/InternalServerError"
+ *         links: [] 
+ */
+
+router.put('/moved/:note_id', authMiddleware, NoteController.moveNote);
+
 export default router;

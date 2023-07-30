@@ -143,6 +143,76 @@ class NoteCreate {
   }
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NoteUpdate:
+ *       type: object
+ *       required:
+ *         - title
+ *         - body
+ *         - style
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Título da nota
+ *           example: "Título da nota"
+ *         body:
+ *           type: string
+ *           description: Corpo da nota
+ *           example: "Corpo da nota"
+ *         style:
+ *           type: string
+ *           description: Estilo da nota
+ *           example: "Estilo da nota"
+ */
+
+class NoteUpdate {
+  @IsString({ message: 'O campo title deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo title é obrigatório' })
+  title: string;
+
+  @IsString({ message: 'O campo body deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo body é obrigatório' })
+  body: string;
+
+  @IsString({ message: 'O campo style deve ser uma string' })
+  @IsNotEmpty({ message: 'O campo style é obrigatório' })
+  style: string;
+
+  constructor(payload: NoteUpdate) {
+    this.title = typeof payload.title === 'string' ? payload.title.trim() : payload.title;
+    this.body = typeof payload.body === 'string' ? payload.body.trim() : payload.body;
+    this.style = typeof payload.style === 'string' ? payload.style.trim() : payload.style;
+  }
+}
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     NoteMove:
+ *       type: object
+ *       required:
+ *         - folder_id
+ *       properties:
+ *         folder_id:
+ *           type: ObjectId
+ *           description: Identificador único da pasta, onde a anotação será armazenada
+ *           example: "6123456789abcdef01234567"
+ */
+
+class NoteMove {
+  @IsObjectId({ message: 'O campo folder_id deve ser um ObjectId válido' })
+  @IsNotEmpty({ message: 'O campo folder_id é obrigatório' })
+  folder_id: ObjectId;
+
+  constructor(payload: NoteMove) {
+    this.folder_id = payload.folder_id;
+  }
+}
+
 // Define a note padrão
 const noteDefault = {
   _id: new ObjectId(),
@@ -154,4 +224,4 @@ const noteDefault = {
   update_at: moment().tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss'),
 };
 
-export { Note, NoteCreate, noteDefault };
+export { Note, NoteCreate, NoteUpdate, NoteMove, noteDefault };

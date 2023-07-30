@@ -102,7 +102,7 @@ export class FolderService {
         }
     }
 
-    // Função para atualizar configurações do usuário
+    // Função para atualizar folder
     static async updateFolder(user_id: string, updatedFolder: any): Promise<{ updatedFolder: any | null; error: string | null }> {
         try {
             const db = getDB();
