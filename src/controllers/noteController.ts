@@ -138,8 +138,11 @@ export class NoteController {
                 notes: folder.notes.filter((note: any) => payload.some((item) => item._id.toString() === note._id.toString()))
             }));
 
-        const filename = 'download_note.pdf'
-        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteTemplate, filename,);
+        const fileName = 'download_note.pdf'
+        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteTemplate, fileName,);
+
+        const fileNameSimple = 'download_note_simple.pdf'
+        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteSimpleTemplate, fileNameSimple,);
 
         return res.status(200).json(foldersWithNotes);
     }
