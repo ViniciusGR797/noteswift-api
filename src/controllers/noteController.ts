@@ -139,10 +139,10 @@ export class NoteController {
             }));
 
         const fileName = 'download_note.pdf'
-        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteTemplate, fileName,);
+        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteTemplate, fileName);
 
         const fileNameSimple = 'download_note_simple.pdf'
-        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteSimpleTemplate, fileNameSimple,);
+        generatePDF(foldersWithNotes, TemplatePDF.downloadNoteSimpleTemplate, fileNameSimple);
 
         return res.status(200).json(foldersWithNotes);
     }

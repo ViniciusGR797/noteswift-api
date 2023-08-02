@@ -48,7 +48,7 @@ export class BinController {
         }
 
         const filename = 'backup_bin.pdf'
-        generatePDF(bin, TemplatePDF.backupBinTemplate, filename,);
+        generatePDF(bin, TemplatePDF.backupBinTemplate, filename);
 
         const emailOptions: EmailOptions = {
             to: user.email,
@@ -63,7 +63,6 @@ export class BinController {
         };
 
         sendEmail(emailOptions);
-
 
         return res.status(200).json(bin);
     }
