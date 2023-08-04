@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    image: noteswift
+    container_name: noteswift
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
