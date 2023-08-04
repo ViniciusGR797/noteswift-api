@@ -1,33 +1,23 @@
-# Estágio de compilação
-FROM node:14 as builder
+# Use a base image com o ambiente Node.js
+FROM node:14-alpine as builder
 
-# Configurando o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
 
-# Copiar apenas os arquivos de dependências e o arquivo de bloqueio para aproveitar o cache da camada
-COPY package.json package-lock.json ./
+# Copia os arquivos de configuração do projeto (package.json e package-lock.json) para o diretório de trabalho
+COPY package*.json ./
 
-# Instalando as dependências
+# Instala as dependências do projeto
 RUN npm install
 
-# Copiar todos os arquivos do projeto
+# Copia o código fonte do projeto para o diretório de trabalho
 COPY . .
 
-# Compilar o TypeScript para JavaScript
+# Compila o TypeScript para JavaScript
 RUN npm run build
 
-# Estágio de produção
-FROM node:14-slim
-
-# Configurando o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
-
-# Copiar apenas os arquivos necessários do estágio de compilação
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-
-# Expor a porta que o aplicativo está ouvindo
+# Expõe a porta que o aplicativo está ouvindo
 EXPOSE ${PORT}
 
-# Comando para iniciar o servidor
+# Comando para iniciar o aplicativo quando o contêiner for iniciado
 CMD ["node", "dist/server.js"]
