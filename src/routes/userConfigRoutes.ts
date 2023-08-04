@@ -29,35 +29,30 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/UserConfig"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/', authMiddleware, UserConfigController.getUserConfig);
@@ -86,42 +81,36 @@ router.get('/', authMiddleware, UserConfigController.getUserConfig);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/UserConfig"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/', authMiddleware, UserConfigController.updateUserConfig);

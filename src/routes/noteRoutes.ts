@@ -36,42 +36,36 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Note"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/:note_id', authMiddleware, NoteController.getNoteById);
@@ -98,28 +92,24 @@ router.get('/:note_id', authMiddleware, NoteController.getNoteById);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Note"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/', authMiddleware, NoteController.createNote);
@@ -146,28 +136,24 @@ router.post('/', authMiddleware, NoteController.createNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Bin"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/download', authMiddleware, NoteController.downloadNote);
@@ -203,42 +189,36 @@ router.post('/download', authMiddleware, NoteController.downloadNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Note"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/:note_id', authMiddleware, NoteController.updateNote);
@@ -274,42 +254,36 @@ router.put('/:note_id', authMiddleware, NoteController.updateNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/MoveSuccess"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/moved/:note_id', authMiddleware, NoteController.moveNote);
@@ -339,42 +313,36 @@ router.put('/moved/:note_id', authMiddleware, NoteController.moveNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Note"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/trash/:note_id', authMiddleware, NoteController.trashNote);
@@ -404,42 +372,36 @@ router.put('/trash/:note_id', authMiddleware, NoteController.trashNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Note"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/restore/:note_id', authMiddleware, NoteController.restoreNote);
@@ -469,35 +431,30 @@ router.put('/restore/:note_id', authMiddleware, NoteController.restoreNote);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/DeleteSuccess"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.delete('/:note_id', authMiddleware, NoteController.deleteNote);

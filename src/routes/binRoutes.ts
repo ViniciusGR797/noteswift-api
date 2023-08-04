@@ -30,35 +30,30 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Bin"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/', authMiddleware, BinController.getBin);
@@ -79,28 +74,24 @@ router.get('/', authMiddleware, BinController.getBin);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Bin"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/backup', authMiddleware, BinController.backupBin);
@@ -123,42 +114,36 @@ router.post('/backup', authMiddleware, BinController.backupBin);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/RestoreSuccess"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/restore', authMiddleware, BinController.restoreBin);
@@ -181,35 +166,30 @@ router.put('/restore', authMiddleware, BinController.restoreBin);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/DeleteSuccess"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.delete('/', authMiddleware, BinController.deleteBin);

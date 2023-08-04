@@ -20,7 +20,7 @@ import { IsObjectId } from '../utils/validate';
  *         - config
  *       properties:
  *         _id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único do usuário
  *           example: "6123456789abcdef01234567"
  *         name:

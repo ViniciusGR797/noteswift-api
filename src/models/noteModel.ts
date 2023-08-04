@@ -18,7 +18,7 @@ import { IsObjectId } from '../utils/validate';
  *         - update_at
  *       properties:
  *         _id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da nota
  *           example: "6123456789abcdef01234567"
  *         title:
@@ -113,7 +113,7 @@ class Note {
  *           description: Estilo da nota
  *           example: "Estilo da nota"
  *         folder_id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da pasta, onde a anotação será armazenada
  *           example: "6123456789abcdef01234567"
  */
@@ -198,7 +198,7 @@ class NoteUpdate {
  *         - folder_id
  *       properties:
  *         folder_id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da pasta, onde a anotação será armazenada
  *           example: "6123456789abcdef01234567"
  */
@@ -243,7 +243,7 @@ class NoteMove {
  *         - _id
  *       properties:
  *         _id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da nota
  *           example: "6123456789abcdef01234567"
  */

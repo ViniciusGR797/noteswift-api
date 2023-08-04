@@ -29,7 +29,7 @@ import { IsObjectId } from '../utils/validate';
  *         - notes
  *       properties:
  *         _id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da pasta
  *           example: "6123456789abcdef01234567"
  *         name:
@@ -178,7 +178,7 @@ class FolderUpdate {
  *         - order
  *       properties:
  *         _id:
- *           type: ObjectId
+ *           type: string
  *           description: Identificador único da pasta
  *           example: "6123456789abcdef01234567"
  *         order:

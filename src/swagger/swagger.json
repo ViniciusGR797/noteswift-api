@@ -1,2814 +1,2589 @@
 {
-    "swagger": "2.0",
-    "basePath": "/",
-    "paths": {
-        "/exercises/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Exercise"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "type": "array",
-                            "example": [],
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista todos os exercícios",
-                "description": "Retorna a lista de dados de exercício",
-                "operationId": "get_exercise_list",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "exercises"
-                ]
-            }
-        },
-        "/exercises/id/{exercise_id}": {
-            "parameters": [
-                {
-                    "name": "exercise_id",
-                    "in": "path",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/Exercise"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista exercício pelo _id",
-                "description": "Retorna dados de um exercício pelo _id",
-                "operationId": "get_exercise_by_id",
-                "parameters": [
-                    {
-                        "name": "exercise_id",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do exercício que deseja buscar"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "exercises"
-                ]
-            }
-        },
-        "/exercises/muscle/{exercise_target}": {
-            "parameters": [
-                {
-                    "name": "exercise_target",
-                    "in": "path",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Exercise"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "type": "array",
-                            "example": [],
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista exercícios pelo músculo target",
-                "description": "Retorna lista de exercícios pelo músculo target",
-                "operationId": "get_exercise_by_target",
-                "parameters": [
-                    {
-                        "name": "exercise_target",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "description": "Nome do músculo target que deseja buscar"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "exercises"
-                ]
-            }
-        },
-        "/exercises/name/{exercise_name}": {
-            "parameters": [
-                {
-                    "name": "exercise_name",
-                    "in": "path",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Exercise"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "type": "array",
-                            "example": [],
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista exercícios pelo name",
-                "description": "Retorna dados de exercícios pelo nome",
-                "operationId": "get_exercise_by_name",
-                "parameters": [
-                    {
-                        "name": "exercise_name",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "description": "Nome do exercício que deseja buscar"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "exercises"
-                ]
-            }
-        },
-        "/foods/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Food"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "type": "array",
-                            "example": [],
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista todos os alimentos",
-                "description": "Retorna a lista de dados de alimentos",
-                "operationId": "get_food_list",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "foods"
-                ]
-            }
-        },
-        "/foods/id/{food_id}": {
-            "parameters": [
-                {
-                    "name": "food_id",
-                    "in": "path",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/Food"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista alimento pelo _id",
-                "description": "Retorna dados de um alimento pelo _id",
-                "operationId": "get_food_by_id",
-                "parameters": [
-                    {
-                        "name": "food_id",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "description": "ID do alimento que deseja buscar"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "foods"
-                ]
-            }
-        },
-        "/foods/name/{food_name}": {
-            "parameters": [
-                {
-                    "name": "food_name",
-                    "in": "path",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Food"
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "type": "array",
-                            "example": [],
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista alimentos pelo name",
-                "description": "Retorna dados de alimentos pelo nome",
-                "operationId": "get_food_by_name",
-                "parameters": [
-                    {
-                        "name": "food_name",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "description": "Nome do alimento que deseja buscar"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "foods"
-                ]
-            }
-        },
-        "/goals/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/Goal"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Vizualiza a meta do usuário",
-                "description": "Retorna a meta do usuário",
-                "operationId": "get_goal",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Deleta a meta do usuário",
-                "description": "Deleta a meta do usuário",
-                "operationId": "delete_goal",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            },
-            "post": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/Goal"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Cria a meta do usuário",
-                "description": "Gerencia a meta do usuário",
-                "operationId": "post_goal",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/Goal"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            },
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Edita a meta do usuário",
-                "description": "Edita a meta do usuário",
-                "operationId": "put_goal",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/Goal"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            }
-        },
-        "/goals/diet/add": {
-            "put": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseAddSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Redundância de dados",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseRedundancy"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Adiciona comida à meta do usuário",
-                "description": "Adiciona comida à meta do usuário",
-                "operationId": "put_add_diet",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/GoalDiet"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            }
-        },
-        "/goals/diet/remove": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Deleta comida da meta do usuário",
-                "description": "Deleta comida da meta do usuário",
-                "operationId": "put_remove_diet",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/GoalDiet"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            }
-        },
-        "/goals/workout/add": {
-            "put": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseAddSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Redundância de dados",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseRedundancy"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Adiciona exercício à meta do usuário",
-                "description": "Adiciona exercício à meta do usuário",
-                "operationId": "put_add_exercise",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/GoalWorkout"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            }
-        },
-        "/goals/workout/remove": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Deleta exercício da meta do usuário",
-                "description": "Deleta exercício da meta do usuário",
-                "operationId": "put_remove_exercise",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/GoalWorkout"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "goals"
-                ]
-            }
-        },
-        "/historics/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "description": "Registro de histórico",
-                                "allOf": [
-                                    {
-                                        "$ref": "#/definitions/Record"
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Retorna o histórico do usuário",
-                "description": "Retorna o histórico do usuário",
-                "operationId": "get_historic",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "historics"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Apaga o histórico do usuário",
-                "description": "Limpa todo o histórico do usuário",
-                "operationId": "delete_historic",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "historics"
-                ]
-            }
-        },
-        "/notifications/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/Notification"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista configurações de notificação",
-                "description": "Obtem todas configurações de notificação do usuário",
-                "operationId": "get_notifications",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "notifications"
-                ]
-            }
-        },
-        "/notifications/water": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Altera configurações de notificação de água",
-                "description": "Altera as configurações de notificação de água do usuário",
-                "operationId": "put_notifications_water",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/NotificationWater"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "notifications"
-                ]
-            }
-        },
-        "/notifications/water/default": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Altera configurações de notificação de água para padrão",
-                "description": "Altera as configurações de notificação de água do usuário para padrão",
-                "operationId": "put_notifications_water_default",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "notifications"
-                ]
-            }
-        },
-        "/notifications/workout": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Altera configurações de notificação de treino",
-                "description": "Altera as configurações de notificação de treino do usuário",
-                "operationId": "put_notifications_workout",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/NotificationWorkout"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "notifications"
-                ]
-            }
-        },
-        "/notifications/workout/default": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Altera configurações de notificação de treino para padrão",
-                "description": "Altera as configurações de notificação de treino do usuário para padrão",
-                "operationId": "put_notifications_workout_default",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "notifications"
-                ]
-            }
-        },
-        "/records/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/Record"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não Processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista o registro do dia",
-                "description": "Retorna registro do dia.",
-                "operationId": "get_record",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Deleta as atividade do dia",
-                "description": "Exclui registro do dia.",
-                "operationId": "delete_record",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            },
-            "post": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/Record"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Registra as atividade do dia",
-                "description": "Criar registro do dia.",
-                "operationId": "post_record",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/RecordCreate"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/diet/add": {
-            "put": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseAddSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Redundância de dados",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseRedundancy"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Adiciona alimento na dieta do dia",
-                "description": "Adiciona alimento no registro do dia",
-                "operationId": "put_record_add_diet",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/RecordAddDiet"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/diet/remove": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Remove alimento na dieta do dia",
-                "description": "Remove alimento no registro do dia",
-                "operationId": "put_record_remove_diet",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/RecordDiet"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/water/add/{water_volume}": {
-            "parameters": [
-                {
-                    "name": "water_volume",
-                    "in": "path",
-                    "required": true,
-                    "type": "integer"
-                }
-            ],
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseAddSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Adiciona água consumida",
-                "description": "Adiciona consumo de água no registro do dia",
-                "operationId": "put_record_add_water",
-                "parameters": [
-                    {
-                        "name": "water_volume",
-                        "in": "query",
-                        "required": true,
-                        "type": "int",
-                        "description": "Quantidade de água adicionada"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/water/remove/{water_volume}": {
-            "parameters": [
-                {
-                    "name": "water_volume",
-                    "in": "path",
-                    "required": true,
-                    "type": "integer"
-                }
-            ],
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Remove água consumida",
-                "description": "Remove consumo de água no registro do dia",
-                "operationId": "put_record_remove_water",
-                "parameters": [
-                    {
-                        "name": "water_volume",
-                        "in": "query",
-                        "required": true,
-                        "type": "int",
-                        "description": "Quantidade de água removida"
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/workout/add": {
-            "put": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseAddSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Redundância de dados",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseRedundancy"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Adiciona exercício no treino do dia",
-                "description": "Adiciona exercício no registro do dia",
-                "operationId": "put_record_add_workout",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/RecordWorkout"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/records/workout/remove": {
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Remove exercício no treino do dia",
-                "description": "Remove exercício no registro do dia",
-                "operationId": "put_record_remove_workout",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/RecordWorkout"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "records"
-                ]
-            }
-        },
-        "/users/": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Lista o usuário logado",
-                "description": "Retorna as informações do usuário logado",
-                "operationId": "get_user_me",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "users"
-                ]
-            },
-            "delete": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseDeleteSucess"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Exclui o seu usuário",
-                "description": "Deleta dados do seu usuário",
-                "operationId": "delete_user_me",
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "users"
-                ]
-            },
-            "post": {
-                "responses": {
-                    "201": {
-                        "description": "Criado",
-                        "schema": {
-                            "$ref": "#/definitions/User"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "404": {
-                        "description": "Não encontrado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseNotFound"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Cadastra um novo usuário",
-                "description": "Registra um novo usuário",
-                "operationId": "post_user_me",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/UserCreate"
-                        }
-                    }
-                ],
-                "tags": [
-                    "users"
-                ]
-            },
-            "put": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUpdateSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnauthorized"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Edita o seu usuário",
-                "description": "Altera dados do seu usuário",
-                "operationId": "put_user_me",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/UserCreate"
-                        }
-                    }
-                ],
-                "security": [
-                    {
-                        "jwt": []
-                    }
-                ],
-                "tags": [
-                    "users"
-                ]
-            }
-        },
-        "/users/login": {
-            "post": {
-                "responses": {
-                    "200": {
-                        "description": "Sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseLoginSucess"
-                        }
-                    },
-                    "400": {
-                        "description": "Requisição inválida",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseBadRequest"
-                        }
-                    },
-                    "401": {
-                        "description": "Não autorizado",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInvalidCredentials"
-                        }
-                    },
-                    "422": {
-                        "description": "Entidade não processável",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseUnprocessableEntity"
-                        }
-                    },
-                    "500": {
-                        "description": "Erro interno do servidor",
-                        "schema": {
-                            "$ref": "#/definitions/ResponseInternalServerError"
-                        }
-                    }
-                },
-                "summary": "Faz login do usuário",
-                "description": "Login do usuário",
-                "operationId": "post_login_user",
-                "parameters": [
-                    {
-                        "name": "payload",
-                        "required": true,
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/UserLogin"
-                        }
-                    }
-                ],
-                "tags": [
-                    "users"
-                ]
-            }
-        }
-    },
-    "info": {
-        "title": "API RESTful - HappyFit",
-        "version": "1.0",
-        "description": "Este projeto consiste na construção de uma **API RESTful usando o framework Flask-RESTX** para criar um sistema que controle a ingestão de alimentos e água, além de gerenciar treinos de academia do usuário. Através de uma interface web, o aplicativo oferecerá notificações para incentivar hábitos saudáveis, como o consumo adequado de água e a definição de metas diárias. \n                    \n\nA API fornecerá aos usuários todas as funcionalidades necessárias para inserir e visualizar informações sobre **alimentação, hidratação e atividades físicas**. Além disso, ela será projetada para **garantir a segurança e a privacidade dos dados do usuário**, utilizando práticas de autenticação e autorização apropriadas.\n                    \n\nO uso do Flask-RESTX permitirá uma fácil implementação dos endpoints da API, bem como a **geração automática da documentação do código**, tornando o processo de desenvolvimento mais eficiente e organizado.\n                    \n\nEm suma, o objetivo deste software é **ajudar os usuários a adotar hábitos saudáveis**, monitorando suas atividades e oferecendo incentivos para manter uma rotina saudável. Através de uma API robusta construída com Flask-RESTX, esperamos fornecer uma solução completa e confiável para controle de alimentação, hidratação e atividades físicas.",
-        "license": {
-            "name": "MIT License",
-            "url": "https://github.com/HappyFit-Co/api-happyfit/blob/main/LICENSE"
-        }
-    },
-    "produces": [
-        "application/json"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "securityDefinitions": {
-        "jwt": {
-            "type": "apiKey",
-            "in": "header",
-            "name": "Authorization",
-            "description": "Para autenticar, coloque o token JWT no formato **Bearer &lt;token&gt;**."
-        }
-    },
-    "security": [
-        {
-            "jwt": []
-        }
-    ],
-    "tags": [
-        {
-            "name": "exercises",
-            "description": "Operações relacionadas a exercícios"
-        },
-        {
-            "name": "foods",
-            "description": "Operações relacionadas a comidas"
-        },
-        {
-            "name": "goals",
-            "description": "Operações relacionadas a metas"
-        },
-        {
-            "name": "historics",
-            "description": "Operações relacionadas ao histórico"
-        },
-        {
-            "name": "notifications",
-            "description": "Operações relacionadas a notificações"
-        },
-        {
-            "name": "records",
-            "description": "Operações relacionadas a registro"
-        },
-        {
-            "name": "users",
-            "description": "Operações relacionadas a usuários"
-        }
-    ],
-    "definitions": {
-        "ResponseInternalServerError": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de erro interno do servidoro",
-                    "example": "Erro interno ao manipular dados no serviço"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseUnprocessableEntity": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de entidade não processável",
-                    "example": "Bearer token from invalid header"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseUnauthorized": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de não autorizado",
-                    "example": "Missing Authorization Header"
-                }
-            },
-            "type": "object"
-        },
-        "Exercise": {
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "description": "Identificador único",
-                    "example": "6123456789abcdef01234567"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Nome",
-                    "example": "Exemplo de exercício"
-                },
-                "body_part": {
-                    "type": "string",
-                    "description": "Parte do corpo",
-                    "example": "Perna"
-                },
-                "target": {
-                    "type": "string",
-                    "description": "Músculo alvo",
-                    "example": "Quadríceps"
-                },
-                "repetition": {
-                    "type": "integer",
-                    "description": "Número de repetições",
-                    "example": 10
-                },
-                "series": {
-                    "type": "integer",
-                    "description": "Número de séries",
-                    "example": 3
-                },
-                "interval": {
-                    "type": "integer",
-                    "description": "Tempo de intervalo entre séries",
-                    "example": 60
-                },
-                "equipment": {
-                    "type": "string",
-                    "description": "Equipamento",
-                    "example": "Barra de peso"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "Descrição",
-                    "example": "Execute o exercício de forma lenta e contínua, sem interromper o movimento."
-                },
-                "execution_gif": {
-                    "type": "string",
-                    "description": "Gif de execução do exercício",
-                    "example": "https://example.com/exercise.gif"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseNotFound": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de não encontrado",
-                    "example": "Nenhum dado encontrado"
-                }
-            },
-            "type": "object"
-        },
-        "Food": {
-            "required": [
-                "calories",
-                "macro_nutrient",
-                "minerals",
-                "name",
-                "portion"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "description": "Identificador único",
-                    "example": "6123456789abcdef01234567"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Nome da comida",
-                    "example": "Nome do alimento"
-                },
-                "portion": {
-                    "type": "string",
-                    "description": "Porção da comida",
-                    "example": "100g"
-                },
-                "calories": {
-                    "type": "integer",
-                    "description": "Quantidade de calorias",
-                    "example": 250
-                },
-                "macro_nutrient": {
-                    "description": "Macro nutrientes (proteína, carboidrato e gordura)",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMacro"
-                        }
-                    ]
-                },
-                "minerals": {
-                    "description": "Minerais (sódio, cálcio, magnésio, potássio, selênio e zinco)",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMineral"
-                        }
-                    ]
-                },
-                "sugar": {
-                    "type": "string",
-                    "description": "Quantidade de açúcar",
-                    "example": "18 g"
-                },
-                "fiber": {
-                    "type": "string",
-                    "description": "Quantidade de fibras",
-                    "example": "1 g"
-                }
-            },
-            "type": "object"
-        },
-        "FoodMacro": {
-            "required": [
-                "carbohydrate",
-                "fat",
-                "protein"
-            ],
-            "properties": {
-                "protein": {
-                    "type": "number",
-                    "description": "Quantidade de proteínas",
-                    "example": 20
-                },
-                "carbohydrate": {
-                    "type": "number",
-                    "description": "Quantidade de carboidratos",
-                    "example": 50
-                },
-                "fat": {
-                    "type": "number",
-                    "description": "Quantidade de gorduras",
-                    "example": 5
-                }
-            },
-            "type": "object"
-        },
-        "FoodMineral": {
-            "required": [
-                "calcium",
-                "magnesium",
-                "potassium",
-                "selenium",
-                "sodium",
-                "zinc"
-            ],
-            "properties": {
-                "sodium": {
-                    "type": "string",
-                    "description": "Quantidade de sódio",
-                    "example": "130 mg"
-                },
-                "calcium": {
-                    "type": "string",
-                    "description": "Quantidade de cálcio",
-                    "example": "90 mg"
-                },
-                "magnesium": {
-                    "type": "string",
-                    "description": "Quantidade de magnésio",
-                    "example": "30 mg"
-                },
-                "potassium": {
-                    "type": "string",
-                    "description": "Quantidade de potássio",
-                    "example": "110 mg"
-                },
-                "selenium": {
-                    "type": "string",
-                    "description": "Quantidade de selênio",
-                    "example": "3 mg"
-                },
-                "zinc": {
-                    "type": "string",
-                    "description": "Quantidade de zinco",
-                    "example": "1 mg"
-                }
-            },
-            "type": "object"
-        },
-        "Goal": {
-            "required": [
-                "daily_calories",
-                "daily_macro_nutrient",
-                "daily_water",
-                "deadline",
-                "diet",
-                "objective",
-                "weight",
-                "workout"
-            ],
-            "properties": {
-                "weight": {
-                    "type": "number",
-                    "description": "Peso do usuário",
-                    "example": 78
-                },
-                "objective": {
-                    "type": "string",
-                    "description": "Objetivo do usuário",
-                    "example": "Emagrecer"
-                },
-                "daily_calories": {
-                    "type": "integer",
-                    "description": "Calorias diárias do usuário",
-                    "example": 2500
-                },
-                "daily_water": {
-                    "type": "integer",
-                    "description": "Água diária que o usuário deve ingerir",
-                    "example": 3000
-                },
-                "daily_macro_nutrient": {
-                    "description": "Macronutrientes diários do usuário",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMacro"
-                        }
-                    ]
-                },
-                "deadline": {
-                    "type": "string",
-                    "description": "Prazo para alcançar a meta",
-                    "example": "AAAA-MM-DD"
-                },
-                "workout": {
-                    "type": "array",
-                    "description": "Treinos diários do usuário",
-                    "items": {
-                        "$ref": "#/definitions/GoalWorkout"
-                    }
-                },
-                "diet": {
-                    "type": "array",
-                    "description": "Alimentação diária do usuário",
-                    "items": {
-                        "$ref": "#/definitions/GoalDiet"
-                    }
-                }
-            },
-            "type": "object"
-        },
-        "GoalWorkout": {
-            "required": [
-                "exercise_id",
-                "hour",
-                "weekday"
-            ],
-            "properties": {
-                "exercise_id": {
-                    "type": "string",
-                    "description": "Identificador único do exercício",
-                    "example": "abcdef123456789012345645"
-                },
-                "hour": {
-                    "type": "string",
-                    "description": "Horário do dia",
-                    "example": "HH:MM"
-                },
-                "weekday": {
-                    "type": "string",
-                    "description": "Dia da Semana",
-                    "example": "domingo"
-                }
-            },
-            "type": "object"
-        },
-        "GoalDiet": {
-            "required": [
-                "food_id",
-                "weekday"
-            ],
-            "properties": {
-                "food_id": {
-                    "type": "string",
-                    "description": "Identificador único do alimento",
-                    "example": "abcdef123456789012345645"
-                },
-                "weekday": {
-                    "type": "string",
-                    "description": "Dia da Semana",
-                    "example": "domingo"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseDeleteSucess": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de sucesso na exclusão de dados",
-                    "example": "Excluído com sucesso"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseBadRequest": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de requisição inválida",
-                    "example": "Dados de entrada inválidos ou incompletos"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseUpdateSucess": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de sucesso na edição de dados",
-                    "example": "Atualizado com sucesso"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseRedundancy": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de redundância de dados",
-                    "example": "Os dados já existem, evite redundância"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseAddSucess": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de sucesso na adição de dados",
-                    "example": "Adicionado com sucesso"
-                }
-            },
-            "type": "object"
-        },
-        "Notification": {
-            "required": [
-                "water",
-                "workout"
-            ],
-            "properties": {
-                "workout": {
-                    "description": "Detalhes da notificação de treino",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/NotificationWorkout"
-                        }
-                    ]
-                },
-                "water": {
-                    "description": "Detalhes da notificação de água",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/NotificationWater"
-                        }
-                    ]
-                }
-            },
-            "type": "object"
-        },
-        "NotificationWorkout": {
-            "required": [
-                "frequency",
-                "hour"
-            ],
-            "properties": {
-                "frequency": {
-                    "type": "string",
-                    "description": "Frequência de treino",
-                    "example": "every weekday"
-                },
-                "hour": {
-                    "type": "string",
-                    "description": "Horário do treino",
-                    "example": "HH:MM"
-                }
-            },
-            "type": "object"
-        },
-        "NotificationWater": {
-            "required": [
-                "end_hour",
-                "frequency",
-                "start_hour"
-            ],
-            "properties": {
-                "frequency": {
-                    "type": "string",
-                    "description": "Frequência de hidratação",
-                    "example": "hourly"
-                },
-                "start_hour": {
-                    "type": "string",
-                    "description": "Horário de início da hidratação",
-                    "example": "HH:MM"
-                },
-                "end_hour": {
-                    "type": "string",
-                    "description": "Horário de término da hidratação",
-                    "example": "HH:MM"
-                }
-            },
-            "type": "object"
-        },
-        "RecordCreate": {
-            "required": [
-                "daily_water",
-                "diet",
-                "workout"
-            ],
-            "properties": {
-                "daily_water": {
-                    "type": "integer",
-                    "description": "Quantidade de água ingerida no dia",
-                    "example": 2000
-                },
-                "workout": {
-                    "type": "array",
-                    "description": "Lista de exercícios realizados no dia",
-                    "items": {
-                        "$ref": "#/definitions/RecordWorkout"
-                    }
-                },
-                "diet": {
-                    "type": "array",
-                    "description": "Lista de alimentos consumidos no dia",
-                    "items": {
-                        "$ref": "#/definitions/RecordAddDiet"
-                    }
-                }
-            },
-            "type": "object"
-        },
-        "RecordWorkout": {
-            "required": [
-                "exercise_id",
-                "hour"
-            ],
-            "properties": {
-                "exercise_id": {
-                    "type": "string",
-                    "description": "Identificador único do exercício",
-                    "example": "abcdef123456789012345645"
-                },
-                "hour": {
-                    "type": "string",
-                    "description": "Hora do treino no formato HH:MM",
-                    "example": "HH:MM"
-                }
-            },
-            "type": "object"
-        },
-        "RecordAddDiet": {
-            "required": [
-                "calories",
-                "hour",
-                "macro_nutrient"
-            ],
-            "properties": {
-                "calories": {
-                    "type": "integer",
-                    "description": "Quantidade de calorias ingeridas",
-                    "example": 100
-                },
-                "macro_nutrient": {
-                    "description": "Macro nutrientes ingeridos",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMacro"
-                        }
-                    ]
-                },
-                "hour": {
-                    "type": "string",
-                    "description": "Hora da refeição no formato HH:MM",
-                    "example": "HH:MM"
-                }
-            },
-            "type": "object"
-        },
-        "Record": {
-            "required": [
-                "_id",
-                "daily_calories",
-                "daily_macro_nutrient",
-                "daily_water",
-                "date",
-                "diet",
-                "workout"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "description": "Identificador único",
-                    "example": "6123456789abcdef01234567"
-                },
-                "date": {
-                    "type": "string",
-                    "description": "Data do registro no formato AAAA-MM-DD",
-                    "example": "AAAA-MM-DD"
-                },
-                "daily_calories": {
-                    "type": "integer",
-                    "description": "Quantidade de calorias ingeridas no dia",
-                    "example": 100
-                },
-                "daily_water": {
-                    "type": "integer",
-                    "description": "Quantidade de água ingerida no dia",
-                    "example": 2000
-                },
-                "daily_macro_nutrient": {
-                    "description": "Macro nutrientes ingeridos no dia",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMacro"
-                        }
-                    ]
-                },
-                "workout": {
-                    "type": "array",
-                    "description": "Lista de exercícios realizados no dia",
-                    "items": {
-                        "$ref": "#/definitions/RecordWorkout"
-                    }
-                },
-                "diet": {
-                    "type": "array",
-                    "description": "Lista de alimentos consumidos no dia",
-                    "items": {
-                        "$ref": "#/definitions/RecordDiet"
-                    }
-                }
-            },
-            "type": "object"
-        },
-        "RecordDiet": {
-            "required": [
-                "calories",
-                "food_record_id",
-                "hour",
-                "macro_nutrient"
-            ],
-            "properties": {
-                "food_record_id": {
-                    "type": "string",
-                    "description": "Identificador único do registro de dieta",
-                    "example": "abcdef123456789012345645"
-                },
-                "calories": {
-                    "type": "integer",
-                    "description": "Quantidade de calorias ingeridas",
-                    "example": 100
-                },
-                "macro_nutrient": {
-                    "description": "Macro nutrientes ingeridos",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/FoodMacro"
-                        }
-                    ]
-                },
-                "hour": {
-                    "type": "string",
-                    "description": "Hora da refeição no formato HH:MM",
-                    "example": "HH:MM"
-                }
-            },
-            "type": "object"
-        },
-        "UserCreate": {
-            "required": [
-                "activity_level",
-                "birthday",
-                "email",
-                "height",
-                "name",
-                "pwd",
-                "sex",
-                "weight"
-            ],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "Nome do usuário",
-                    "example": "Nome do usuário"
-                },
-                "email": {
-                    "type": "string",
-                    "description": "Endereço de email do usuário",
-                    "example": "nome@example.com"
-                },
-                "pwd": {
-                    "type": "string",
-                    "description": "Senha do usuário",
-                    "example": "<senha sem hash>"
-                },
-                "weight": {
-                    "type": "number",
-                    "description": "Peso do usuário em kg",
-                    "example": 80
-                },
-                "height": {
-                    "type": "number",
-                    "description": "Altura do usuário em metros",
-                    "example": 1.8
-                },
-                "birthday": {
-                    "type": "string",
-                    "description": "Data de Nascimento no formato AAAA-MM-DD",
-                    "example": "AAAA-MM-DD"
-                },
-                "sex": {
-                    "type": "string",
-                    "description": "Sexo biológico",
-                    "example": "Masculino"
-                },
-                "activity_level": {
-                    "type": "string",
-                    "description": "Nível de atividade física do usuário",
-                    "example": "Moderate"
-                }
-            },
-            "type": "object"
-        },
-        "User": {
-            "required": [
-                "_id",
-                "activity_level",
-                "birthday",
-                "email",
-                "goal",
-                "height",
-                "name",
-                "notification_config",
-                "pwd",
-                "sex",
-                "weight"
-            ],
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "description": "Identificador único do usuário",
-                    "example": "6123456789abcdef01234567"
-                },
-                "name": {
-                    "type": "string",
-                    "description": "Nome do usuário",
-                    "example": "Nome do usuário"
-                },
-                "email": {
-                    "type": "string",
-                    "description": "Endereço de email do usuário",
-                    "example": "nome@example.com"
-                },
-                "pwd": {
-                    "type": "string",
-                    "description": "Senha do usuário",
-                    "example": "<senha com hash>"
-                },
-                "weight": {
-                    "type": "number",
-                    "description": "Peso do usuário em kg",
-                    "example": 80
-                },
-                "height": {
-                    "type": "number",
-                    "description": "Altura do usuário em metros",
-                    "example": 1.8
-                },
-                "birthday": {
-                    "type": "string",
-                    "description": "Data de Nascimento no formato AAAA-MM-DD",
-                    "example": "AAAA-MM-DD"
-                },
-                "sex": {
-                    "type": "string",
-                    "description": "Sexo biológico",
-                    "example": "Masculino"
-                },
-                "activity_level": {
-                    "type": "string",
-                    "description": "Nível de atividade física do usuário",
-                    "example": "Moderate"
-                },
-                "goal": {
-                    "description": "Objetivo do usuário",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/Goal"
-                        }
-                    ]
-                },
-                "historic": {
-                    "type": "array",
-                    "items": {
-                        "description": "Registro de histórico",
-                        "allOf": [
-                            {
-                                "$ref": "#/definitions/Record"
-                            }
-                        ]
-                    }
-                },
-                "notification_config": {
-                    "description": "Configurações de notificação do usuário",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/Notification"
-                        }
-                    ]
-                }
-            },
-            "type": "object"
-        },
-        "UserLogin": {
-            "required": [
-                "email",
-                "pwd"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "description": "Endereço de email do usuário",
-                    "example": "nome@example.com"
-                },
-                "pwd": {
-                    "type": "string",
-                    "description": "Senha do usuário",
-                    "example": "<senha sem hash>"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseInvalidCredentials": {
-            "properties": {
-                "msg": {
-                    "type": "string",
-                    "description": "Mensagem de credenciais inválidas",
-                    "example": "Credenciais de usuário inválidas"
-                }
-            },
-            "type": "object"
-        },
-        "ResponseLoginSucess": {
-            "properties": {
-                "access_token": {
-                    "type": "string",
-                    "description": "Mensagem de sucesso ao fazer login",
-                    "example": "<token>"
-                }
-            },
-            "type": "object"
-        }
-    },
-    "responses": {
-        "ParseError": {
-            "description": "When a mask can't be parsed"
-        },
-        "MaskError": {
-            "description": "When any error occurs on mask"
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API RESTful - NoteSwift",
+    "version": "1.0.0",
+    "description": "Este projeto consiste na construção de uma **API RESTful usando Node.js e TypeScript**, com integração ao banco de dados **MongoDB**, para criar um sistema que permita aos usuários gerenciar **anotações online**. As anotações serão organizadas em pastas e também terão uma lixeira para recuperação de itens excluídos. Através de uma interface amigável, os usuários poderão **criar, visualizar, editar e excluir anotações**, além de **restaurar itens previamente descartados**.\n\nA API fornecerá aos usuários todas as funcionalidades necessárias para realizar operações básicas em suas anotações, como criar, visualizar, editar e excluir. Além disso, ela será projetada para garantir a segurança e a privacidade dos dados do usuário, implementando práticas adequadas de autenticação e autorização.\n\nO uso do **Node.js e TypeScript** permitirá uma **fácil implementação dos endpoints da API**, bem como a manutenção do código com tipagem estática, tornando o processo de desenvolvimento mais seguro e organizado. Utilizaremos o **MongoDB** como nosso banco de dados para **armazenar as anotações e as informações relacionadas a pastas e lixeira**.\n\nPara a **documentação da API**, faremos uso do **Swagger UI** através do pacote **'swagger-ui-express'** em conjunto com o **'swagger-jsdoc'**, o que permitirá gerar automaticamente a documentação da API a partir das anotações do código-fonte. Isso tornará mais fácil para os desenvolvedores e usuários entenderem e interagirem com os endpoints da API.\n\nPara gerenciar as dependências do projeto, utilizaremos o **Yarn** como gerenciador de pacotes, garantindo uma instalação mais rápida e confiável das bibliotecas necessárias para o desenvolvimento.\n\nEm suma, o objetivo deste software é oferecer aos usuários uma **maneira prática e segura de gerenciar suas anotações online**, proporcionando organização através de pastas e a capacidade de recuperar itens excluídos da lixeira. Com uma API RESTful completa e bem documentada, esperamos fornecer uma solução confiável e eficiente para atender às necessidades de gerenciamento de anotações de nossos usuários.",
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/ViniciusGR797/noteswift-api/blob/main/LICENSE"
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "jwt": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Para autenticar, coloque o token JWT no formato **Bearer _token_**."
+      }
+    },
+    "schemas": {
+      "Library": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Folder"
+        }
+      },
+      "Folder": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "is_default",
+          "color",
+          "order",
+          "notes"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador único da pasta",
+            "example": "6123456789abcdef01234567"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da pasta",
+            "example": "Nome da pasta"
+          },
+          "is_default": {
+            "type": "string",
+            "description": "Marcação da pasta default (não pode ser apagada)",
+            "example": true
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor da pasta",
+            "example": "#FF0000"
+          },
+          "order": {
+            "type": "integer",
+            "description": "Ordem da pasta",
+            "example": 1
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Note"
+            }
+          }
+        }
+      },
+      "FolderCreate": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da pasta",
+            "example": "Nome da pasta"
+          }
+        }
+      },
+      "FolderUpdate": {
+        "type": "object",
+        "required": [
+          "name",
+          "color"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da pasta",
+            "example": "Nome da pasta"
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor da pasta",
+            "example": "#FF0000"
+          }
+        }
+      },
+      "LibraryOrder": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/FolderOrder"
+        }
+      },
+      "FolderOrder": {
+        "type": "object",
+        "required": [
+          "_id",
+          "order"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador único da pasta",
+            "example": "6123456789abcdef01234567"
+          },
+          "order": {
+            "type": "integer",
+            "description": "Ordem da pasta",
+            "example": 1
+          }
+        }
+      },
+      "Note": {
+        "type": "object",
+        "required": [
+          "_id",
+          "title",
+          "body",
+          "style",
+          "trashed",
+          "update_at"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador único da nota",
+            "example": "6123456789abcdef01234567"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título da nota",
+            "example": "Título da nota"
+          },
+          "body": {
+            "type": "string",
+            "description": "Corpo da nota",
+            "example": "Corpo da nota"
+          },
+          "style": {
+            "type": "string",
+            "description": "Estilo da nota",
+            "example": "Estilo da nota"
+          },
+          "trashed": {
+            "type": "boolean",
+            "description": "Indica se a nota está na lixeira",
+            "example": true
+          },
+          "deleted_date": {
+            "type": "string",
+            "description": "Data de exclusão da nota",
+            "example": "2022-01-01 10:30:00"
+          },
+          "update_at": {
+            "type": "string",
+            "description": "Data de atualização da nota",
+            "example": "2022-01-01 10:30:00"
+          }
+        }
+      },
+      "NoteCreate": {
+        "type": "object",
+        "required": [
+          "title",
+          "body",
+          "style",
+          "folder_id"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Título da nota",
+            "example": "Título da nota"
+          },
+          "body": {
+            "type": "string",
+            "description": "Corpo da nota",
+            "example": "Corpo da nota"
+          },
+          "style": {
+            "type": "string",
+            "description": "Estilo da nota",
+            "example": "Estilo da nota"
+          },
+          "folder_id": {
+            "type": "string",
+            "description": "Identificador único da pasta, onde a anotação será armazenada",
+            "example": "6123456789abcdef01234567"
+          }
+        }
+      },
+      "NoteUpdate": {
+        "type": "object",
+        "required": [
+          "title",
+          "body",
+          "style"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Título da nota",
+            "example": "Título da nota"
+          },
+          "body": {
+            "type": "string",
+            "description": "Corpo da nota",
+            "example": "Corpo da nota"
+          },
+          "style": {
+            "type": "string",
+            "description": "Estilo da nota",
+            "example": "Estilo da nota"
+          }
+        }
+      },
+      "NoteMove": {
+        "type": "object",
+        "required": [
+          "folder_id"
+        ],
+        "properties": {
+          "folder_id": {
+            "type": "string",
+            "description": "Identificador único da pasta, onde a anotação será armazenada",
+            "example": "6123456789abcdef01234567"
+          }
+        }
+      },
+      "Bin": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Note"
+        }
+      },
+      "NoteList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/NoteDownload"
+        }
+      },
+      "NoteDownload": {
+        "type": "object",
+        "required": [
+          "_id"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador único da nota",
+            "example": "6123456789abcdef01234567"
+          }
+        }
+      },
+      "RestoreSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Mensagem de sucesso ao recuperar toda lixeira",
+            "example": "Recuperado com sucesso"
+          }
+        }
+      },
+      "MoveSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Mensagem de sucesso ao mover",
+            "example": "Movida com sucesso"
+          }
+        }
+      },
+      "DeleteSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Mensagem de sucesso ao excluir",
+            "example": "Excluído com sucesso"
+          }
+        }
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Mensagem de sucesso ao fazer login",
+            "example": "<token>"
+          }
+        }
+      },
+      "LoginFail": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Mensagem de falha ao fazer login",
+            "example": "Credenciais de usuário inválidas"
+          }
+        }
+      },
+      "BadRequest": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Requisição inválida. Alguns parâmetros podem estar faltando ou serem inválidos",
+            "example": "Alguns parâmetros podem estar faltando ou serem inválidos"
+          }
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Não autorizado. O token JWT não foi fornecido ou é inválido",
+            "example": "O token JWT não foi fornecido ou é inválido"
+          }
+        }
+      },
+      "Forbidden": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Proibido. O usuário não tem permissão para acessar o recurso solicitado",
+            "example": "Não tem permissão para acessar o recurso solicitado"
+          }
+        }
+      },
+      "NotFound": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Nenhum dado encontrado. O recurso solicitado não existe",
+            "example": "Nenhum dado encontrado"
+          }
+        }
+      },
+      "InternalServerError": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "description": "Erro interno ao manipular dados no serviço",
+            "example": "Erro interno do servidor"
+          }
+        }
+      },
+      "UserConfig": {
+        "type": "object",
+        "required": [
+          "dark_mode",
+          "draft_notification",
+          "archived",
+          "auto_backup",
+          "news"
+        ],
+        "properties": {
+          "dark_mode": {
+            "type": "boolean",
+            "description": "Indica se o modo escuro está ativado",
+            "example": false
+          },
+          "draft_notification": {
+            "type": "boolean",
+            "description": "Indica se as notificações de rascunho estão ativadas",
+            "example": true
+          },
+          "archived": {
+            "type": "boolean",
+            "description": "Indica se a funcionalidade de arquivamento está ativada",
+            "example": true
+          },
+          "auto_backup": {
+            "type": "boolean",
+            "description": "Indica se o backup automático está ativado",
+            "example": true
+          },
+          "news": {
+            "type": "boolean",
+            "description": "Indica se as notícias estão habilitadas",
+            "example": true
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "pwd",
+          "library",
+          "config"
+        ],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador único do usuário",
+            "example": "6123456789abcdef01234567"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "Nome do usuário"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "example": "email@example.com"
+          },
+          "pwd": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "senha"
+          },
+          "library": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Folder"
+            }
+          },
+          "config": {
+            "$ref": "#/components/schemas/UserConfig"
+          }
+        }
+      },
+      "UserUpsert": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "pwd"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário",
+            "example": "Nome do usuário"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "example": "email@example.com"
+          },
+          "pwd": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "senha"
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "required": [
+          "email",
+          "pwd"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email do usuário",
+            "example": "email@example.com"
+          },
+          "pwd": {
+            "type": "string",
+            "description": "Senha do usuário",
+            "example": "senha"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "jwt": []
+    }
+  ],
+  "paths": {
+    "/bins": {
+      "get": {
+        "summary": "Lista anotações da lixeira",
+        "description": "Retorna as informações das anotações da lixeira",
+        "tags": [
+          "Bin"
+        ],
+        "operationId": "get_bin",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove todas as anotações da lixeira",
+        "description": "Apaga todas as anotações em que se encontram na lixeira",
+        "tags": [
+          "Bin"
+        ],
+        "operationId": "delete_bin",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bins/backup": {
+      "post": {
+        "summary": "Cria um arquivo PDF com lixeira para download e o envia por email",
+        "description": "Cria um arquivo PDF com base nos dados da lixeira para download e o envia por email",
+        "tags": [
+          "Bin"
+        ],
+        "operationId": "backup_bin",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bins/restore": {
+      "put": {
+        "summary": "Recuperar todas as anotações da lixeira",
+        "description": "Recuperar todas as anotações em que se encontram na lixeira",
+        "tags": [
+          "Bin"
+        ],
+        "operationId": "restore_bin",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestoreSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders": {
+      "get": {
+        "summary": "Vizualiza pasta default",
+        "description": "Retorna as informações da pasta default",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "get_default_folder",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Folder"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova pasta",
+        "description": "Cria uma nova pasta com base nos dados fornecidos no corpo da requisição.",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "create_folder",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Folder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders/{folder_id}": {
+      "parameters": [
+        {
+          "name": "folder_id",
+          "in": "path",
+          "required": true,
+          "description": "ID da pasta que será deletada",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Visualiza pasta pelo _id",
+        "description": "Retorna as informações da pasta pelo _id",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "get_folder_by_id",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Folder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza pasta",
+        "description": "Atualiza as informações da pasta desejada",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "update_folder",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FolderUpdate"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Folder"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove pasta",
+        "description": "Apaga pasta, lembrando que a pasta default não pode ser apagada",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "delete_folder",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/folders/name/{folder_name}": {
+      "parameters": [
+        {
+          "name": "folder_name",
+          "in": "path",
+          "required": true,
+          "description": "Nome da pasta que será visualizada",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Lista pastas pelo name",
+        "description": "Retorna as informações da pastas pelo name",
+        "tags": [
+          "Folder"
+        ],
+        "operationId": "get_folder_by_name",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Library"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/libraries": {
+      "get": {
+        "summary": "Lista biblioteca de pastas",
+        "description": "Retorna as informações da biblioteca de pastas",
+        "tags": [
+          "Library"
+        ],
+        "operationId": "get_library",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Library"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove biblioteca de pastas",
+        "description": "Apaga biblioteca de pastas, deixando apenas a pasta default",
+        "tags": [
+          "Library"
+        ],
+        "operationId": "delete_library",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/libraries/order": {
+      "put": {
+        "summary": "Atualiza ordem da biblioteca",
+        "description": "Atualiza as informações ordem da biblioteca",
+        "tags": [
+          "Library"
+        ],
+        "operationId": "update_order_library",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LibraryOrder"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Library"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/{note_id}": {
+      "parameters": [
+        {
+          "name": "note_id",
+          "in": "path",
+          "required": true,
+          "description": "ID da anotação que será deletada",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Visualiza anotação pelo _id",
+        "description": "Retorna as informações da anotação pelo _id",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "get_note_by_id",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza anotação",
+        "description": "Atualiza as informações da anotação desejada",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "update_note",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteUpdate"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove anotação",
+        "description": "Apaga dados de anotação",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "delete_note",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes": {
+      "post": {
+        "summary": "Cria uma nova anotação",
+        "description": "Cria uma nova anotação com base nos dados fornecidos no corpo da requisição",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "create_note",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/download": {
+      "post": {
+        "summary": "Cria um arquivo PDF de anotações",
+        "description": "Cria um arquivo PDF de anotações com base nos dados fornecidos no corpo da requisição",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "download_note",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/moved/{note_id}": {
+      "parameters": [
+        {
+          "name": "note_id",
+          "in": "path",
+          "required": true,
+          "description": "ID da anotação que será movida",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Mover anotação",
+        "description": "Alterar pasta em que se encontra a anotação",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "move_note",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteMove"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoveSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/trash/{note_id}": {
+      "parameters": [
+        {
+          "name": "note_id",
+          "in": "path",
+          "required": true,
+          "description": "ID da anotação que será movida para lixeira",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Mover anotação para lixeira",
+        "description": "Reciclar anotação para lixeira",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "trash_note",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/restore/{note_id}": {
+      "parameters": [
+        {
+          "name": "note_id",
+          "in": "path",
+          "required": true,
+          "description": "ID da anotação que será recuperada da lixeira",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Recuperar anotação da lixeira",
+        "description": "Recuperar anotação em que se encontra na lixeira",
+        "tags": [
+          "Note"
+        ],
+        "operationId": "restore_note",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Note"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/configs": {
+      "get": {
+        "summary": "Vizualiza configurações do usuário logado",
+        "description": "Retorna as informações de configuração do usuário logado",
+        "tags": [
+          "Config"
+        ],
+        "operationId": "get_user_config",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserConfig"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza configurações do usuário logado",
+        "description": "Atualiza as informações de configuração do usuário logado",
+        "tags": [
+          "Config"
+        ],
+        "operationId": "update_user_config",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserConfig"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Vizualiza o usuário logado",
+        "description": "Retorna as informações do usuário logado",
+        "tags": [
+          "User"
+        ],
+        "operationId": "get_user_me",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário com base nos dados fornecidos no corpo da requisição.",
+        "tags": [
+          "User"
+        ],
+        "operationId": "create_user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpsert"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza o usuário logado",
+        "description": "Atualiza as informações do usuário logado com base nos dados fornecidos no corpo da requisição",
+        "tags": [
+          "User"
+        ],
+        "operationId": "update_user_me",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpsert"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove o usuário logado",
+        "description": "Apaga da base de dados seu usuário",
+        "tags": [
+          "User"
+        ],
+        "operationId": "delete_user_me",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Faz login do usuário",
+        "description": "Autentica o usuário com base no email e senha fornecidos no corpo da requisição.",
+        "tags": [
+          "User"
+        ],
+        "operationId": "login_user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequest",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginFail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Bin",
+      "description": "Rotas para manipulação da lixeira"
+    },
+    {
+      "name": "Folder",
+      "description": "Rotas para manipulação de pastas"
+    },
+    {
+      "name": "Library",
+      "description": "Rotas para manipulação de biblioteca de pastas"
+    },
+    {
+      "name": "Note",
+      "description": "Rotas para manipulação de anotações"
+    },
+    {
+      "name": "Config",
+      "description": "Rotas para manipulação de configurações de usuário"
+    },
+    {
+      "name": "User",
+      "description": "Rotas para manipulação de usuários"
+    }
+  ]
 }

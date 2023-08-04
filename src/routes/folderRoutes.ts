@@ -29,35 +29,30 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Folder"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/', authMiddleware, FolderController.getDefaultFolder);
@@ -87,42 +82,36 @@ router.get('/', authMiddleware, FolderController.getDefaultFolder);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Folder"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/:folder_id', authMiddleware, FolderController.getFolderById);
@@ -152,42 +141,36 @@ router.get('/:folder_id', authMiddleware, FolderController.getFolderById);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Library"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/name/:folder_name', authMiddleware, FolderController.getFolderByName);
@@ -214,28 +197,24 @@ router.get('/name/:folder_name', authMiddleware, FolderController.getFolderByNam
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Folder"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/', authMiddleware, FolderController.createFolder);
@@ -271,42 +250,36 @@ router.post('/', authMiddleware, FolderController.createFolder);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Folder"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/:folder_id', authMiddleware, FolderController.updateFolder);
@@ -336,35 +309,30 @@ router.put('/:folder_id', authMiddleware, FolderController.updateFolder);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/DeleteSuccess"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.delete('/:folder_id', authMiddleware, FolderController.deleteFolder);

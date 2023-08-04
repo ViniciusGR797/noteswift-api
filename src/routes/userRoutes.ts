@@ -29,35 +29,30 @@ const router = Router();
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.get('/', authMiddleware, UserController.getUserMe);
@@ -84,28 +79,24 @@ router.get('/', authMiddleware, UserController.getUserMe);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/', UserController.createUser);
@@ -132,28 +123,24 @@ router.post('/', UserController.createUser);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/LoginSuccess"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/LoginFail"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.post('/login', UserController.loginUser);
@@ -182,42 +169,36 @@ router.post('/login', UserController.loginUser);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/User"
- *         links: [] 
  *       400:
  *         description: BadRequest
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/BadRequest"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.put('/', authMiddleware, UserController.updateUserMe);
@@ -240,35 +221,30 @@ router.put('/', authMiddleware, UserController.updateUserMe);
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/DeleteSuccess"
- *         links: [] 
  *       401:
  *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Unauthorized"
- *         links: [] 
  *       403:
  *         description: Forbidden
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/Forbidden"
- *         links: [] 
  *       404:
  *         description: NotFound
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/NotFound"
- *         links: [] 
  *       500:
  *         description: InternalServerError
  *         content:
  *           application/json:
  *             schema:
  *               $ref: "#/components/schemas/InternalServerError"
- *         links: [] 
  */
 
 router.delete('/', authMiddleware, UserController.deleteUserMe);
