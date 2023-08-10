@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import yaml from 'js-yaml';
-import swaggerSpec from './swaggerConfig';  
+import { swaggerSpec } from './swaggerConfig';  
 
 fs.writeFile(path.join(__dirname, 'swagger.json'), JSON.stringify(swaggerSpec, null, 2), (err: any) => {
   if (err) {

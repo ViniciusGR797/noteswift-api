@@ -1,4 +1,6 @@
 import swaggerJSDoc from 'swagger-jsdoc';
+import path from 'path';
+import fs from 'fs';
 
 const swaggerOptions = {
   definition: {
@@ -56,4 +58,6 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-export default swaggerSpec;
+const swaggerSpecJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'swagger.json'), 'utf8'));
+
+export { swaggerSpec, swaggerSpecJson };
