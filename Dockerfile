@@ -6,9 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 COPY .env ./
 COPY . .
-COPY ./src/swagger/swagger.json ./dist/swagger/swagger.json
+COPY ./src/swagger/swagger.json ./dist/swagger/
 
-RUN npm install && npm cache clean --force && npm run build
+RUN npm install --only=production && npm cache clean --force && npm run build
 
 # Etapa final
 FROM node:14-alpine
