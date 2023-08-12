@@ -2,7 +2,8 @@
 
 <div align="center">
   <img src="https://img.shields.io/static/v1?label=javascript&message=language&color=yellow&style=for-the-badge&logo=javascript"/>
-  <img src="https://img.shields.io/static/v1?label=node&message=environment&color=orange&style=for-the-badge&logo=node.js"/>
+  <img src="https://img.shields.io/static/v1?label=node&message=environment&color=orange&style=for-the-badge&logo=node.js"/>  
+  <img src="https://img.shields.io/static/v1?label=express&message=framework&color=green&style=for-the-badge&logo=express"/>  
   <img src="https://img.shields.io/static/v1?label=typescript&message=superset&color=blue&style=for-the-badge&logo=typescript"/>
   <img src="https://img.shields.io/static/v1?label=mongodb&message=database&color=green&style=for-the-badge&logo=mongodb"/>
   <img src="https://img.shields.io/static/v1?label=docker&message=container&color=blue&style=for-the-badge&logo=docker"/>
@@ -43,42 +44,40 @@
 
 ## 🏡 Execução localmente
 
-Certifique-se de ter o Python instalado em sua máquina antes de prosseguir com essas etapas.
+Certifique-se de ter o [Node.js](https://nodejs.org/en) instalado em sua máquina antes de prosseguir com essas etapas.
 
-Este tutorial foi desenvolvido para usuários do Windows com um terminal PowerShell. Siga as etapas abaixo para executar o projeto localmente em sua máquina:
+Siga as etapas abaixo para executar o projeto localmente em sua máquina:
+
+* Clone esse repositório na sua máquina, colocando a respectiva URL do repositório:
+```
+git clone https://github.com/ViniciusGR797/noteswift-api.git
+```
+
+* Navegar para o diretório do projeto clonado:
+```
+cd noteswift-api
+```
 
 * Crie um arquivo chamado **_.env_** e configure corretamente as variáveis de ambiente necessárias. Você pode usar o arquivo **_.env.sample_** como referência.
 
-* Crie um ambiente virtual executando o seguinte comando no terminal:
+* Instale o gerenciador de pacotes Yarn:
 ```
-python -m venv env
-```
-
-* Em seguida, ative o ambiente virtual. Você verá que o prompt do terminal mostrará '(env)':
-```
-.\env\Scripts\activate
+npm install -g yarn
 ```
 
-* Agora, instale todas as dependências listadas no arquivo 'requirements.txt', executando o seguinte comando:
+* Agora, instale todas as dependências listadas no arquivo 'package.json', executando o seguinte comando:
 ```
-pip install -r requirements.txt
-```
-
-* Com as dependências instaladas, execute o arquivo 'server.py' para iniciar o servidor:
-```
-python -u server.py
+yarn install
 ```
 
-* Após a execução, você poderá acessar a API por meio da URL local fornecida no terminal.
-
-* Se desejar parar a execução da aplicação, pressione `Ctrl + C` no terminal. Em seguida, você pode desativar o ambiente virtual executando o seguinte comando:
+* Com as dependências instaladas, execute o seguinte comando para iniciar o servidor:
 ```
-deactivate
+yarn start
 ```
 
-Após desativar o ambiente virtual, a execução do projeto será encerrada.
+* Após a execução, você poderá acessar a API por meio da porta local fornecida no terminal, por exemplo: `http://localhost:3000/api-docs/`.
 
-Lembre-se de que, sempre que desejar executar novamente o projeto localmente, você precisará ativar o ambiente virtual antes de iniciar a aplicação.
+* Se desejar parar a execução da aplicação, pressione `Ctrl + C` no terminal, a execução do projeto será encerrada.
 
 ## 🐳 Execução com Docker
 
@@ -90,7 +89,7 @@ Para executar o projeto usando Docker, siga as etapas abaixo:
 
 * No terminal, navegue até a pasta raiz do projeto e execute o seguinte comando:
 ```
-docker-compose up
+docker-compose up --build
 ```
 Isso iniciará os contêineres Docker necessários para executar o projeto.
 
@@ -112,11 +111,11 @@ Para importar a coleção do Postman e executar os testes, siga as etapas abaixo
 
 * Após a instalação, abra o Postman.
 
-* No topo da interface do Postman, clique em "File" e, em seguida, selecione "Import".
+* No topo da interface do Postman, clique em `File` e, em seguida, selecione `Import`.
 
-* Na janela de importação, clique na guia "File" e escolha o arquivo Postman fornecido neste projeto.
+* Na janela de importação, clique na guia `File` e escolha o arquivo Postman fornecido neste projeto.
 
-* Clique em "Import" para importar a coleção no Postman.
+* Clique em `Import` para importar a coleção no Postman.
 
 * Agora você pode executar os testes funcionais na API usando a coleção importada. Certifique-se de que o servidor esteja em execução antes de executar os testes.
 
@@ -124,29 +123,30 @@ Os testes funcionais fornecidos na coleção do Postman são projetados para val
 
 ## 🛠 Construído com
 
-* [Python](https://www.python.org/): Linguagem de programação poderosa e de alto nível.
-* [Flask](https://flask.palletsprojects.com/): Framework web leve e flexível para Python.
-* [Flask-RESTX](https://flask-restx.readthedocs.io/): Extensão do Flask para criação de APIs RESTful de maneira fácil e rápida.
+* [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript): Linguagem de programação de script amplamente usada para desenvolvimento web.
+* [Node.js](https://nodejs.org/en): Plataforma de tempo de execução de JavaScript baseada no V8 do Google.
+* [Express.js](https://expressjs.com/): Framework web rápido e minimalista para Node.js.
+* [TypeScript](https://www.typescriptlang.org/): Superset do JavaScript que adiciona tipos estáticos e outras características ao código.
 * [MongoDB](https://www.mongodb.com/): Banco de dados NoSQL altamente escalável e flexível.
 * [Swagger UI](https://swagger.io/tools/swagger-ui/): Interface de usuário interativa para explorar e testar APIs RESTful.
 * [Docker](https://www.docker.com/): Plataforma de contêineres que facilita a criação e implantação de aplicativos em ambientes isolados.
 
-Essas são as principais tecnologias utilizadas para construir esta API RESTful. O Flask e o Flask-RESTX são responsáveis por criar as rotas e manipular as respostas HTTP da API. O MongoDB é utilizado como banco de dados para armazenar e recuperar os dados da aplicação de forma eficiente. O Swagger UI fornece uma interface amigável para explorar e testar a API. O Docker é utilizado para empacotar a aplicação e suas dependências em contêineres, facilitando a implantação e a portabilidade.
+Essas são as principais tecnologias utilizadas para construir esta API RESTful. O JavaScript e TypeScript, onde o primeiro proporciona a base e o último adiciona uma camada de tipos sólidos. Node.js fornece o ambiente de execução, enquanto o Express.js agiliza o desenvolvimento da web. O MongoDB é utilizado como banco de dados para armazenar e recuperar os dados da aplicação de forma eficiente. O Swagger UI fornece uma interface amigável para explorar e testar a API. O Docker é utilizado para empacotar a aplicação e suas dependências em contêineres, facilitando a implantação e a portabilidade.
 
 ## 📫 Documentação
 
 A documentação do projeto e da API está disponível nos seguintes links:
 
-- [Documentação do Projeto](https://cdn.discordapp.com/attachments/1089358473483006105/1111483062363111464/ProjectPlan_HappyFit.pdf): Este documento fornece uma visão geral do projeto HappyFit, incluindo sua finalidade, escopo e funcionalidades.
+- [Documentação do Projeto](): Este documento fornece uma visão geral do projeto NoteSwift, incluindo sua finalidade, escopo e funcionalidades.
 - [Documentação do Swagger Json](https://github.com/ViniciusGR797/noteswift-api/blob/main/src/swagger/swagger.json) e [Yaml](https://github.com/ViniciusGR797/noteswift-api/blob/main/src/swagger/swagger.yaml): A documentação do Swagger descreve os endpoints e os modelos da API de forma detalhada.
 
-Após executar a aplicação, você pode acessar o Swagger UI pela rota "/", onde encontrará uma interface interativa para explorar e testar a API.
+Após executar a aplicação, você pode acessar o Swagger UI pela rota `/api-docs` e `/docs`, onde encontrará uma interface interativa para explorar e testar a API.
 
-Certifique-se de revisar esses documentos para obter mais informações sobre o projeto HappyFit e para entender como interagir com a API usando o Swagger UI. Eles fornecerão detalhes importantes sobre o escopo, os recursos e os endpoints disponíveis na aplicação.
+Certifique-se de revisar esses documentos para obter mais informações sobre o projeto NoteSwift e para entender como interagir com a API usando o Swagger UI. Eles fornecerão detalhes importantes sobre o escopo, os recursos e os endpoints disponíveis na aplicação.
 
 ## 🤝 Equipe
 
-Gostaríamos de expressar nosso sincero agradecimento às seguintes pessoas que contribuíram para este projeto:
+Gostaria de aproveitar este espaço para expressar minha sincera gratidão à jornada que percorri na realização deste projeto:
 
 <table>
   <tr>
@@ -161,7 +161,7 @@ Gostaríamos de expressar nosso sincero agradecimento às seguintes pessoas que 
   </tr>
 </table>
 
-Agradecemos a todos os membros da equipe por seu trabalho árduo, dedicação e contribuições valiosas para o projeto. Seu empenho e habilidades foram fundamentais para o sucesso deste trabalho.
+Embora tenha sido uma jornada individual, esta realização não teria sido possível sem a dedicação, esforço e comprometimento. Cada etapa deste projeto foi impulsionada pelo empenho e habilidades que empreguei. Agradeço profundamente por esta oportunidade de crescimento e aprendizado.
 
 ## 📝 Licença
 
@@ -171,4 +171,4 @@ A licença escolhida para o projeto é um elemento importante para estabelecer o
 
 Recomenda-se que você leia atentamente o arquivo LICENSE para garantir o cumprimento das regras estabelecidas e o uso adequado do código fornecido neste repositório.
 
-[⬆ Voltar ao topo](#happyfit-restful-api)
+[⬆ Voltar ao topo](#noteswift-restful-api)
