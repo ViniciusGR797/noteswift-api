@@ -38,7 +38,7 @@
 
 :small_blue_diamond: [📫 Documentação](#-documentação)
 
-:small_blue_diamond: [🤝 Equipe](#-equipe)
+:small_blue_diamond: [🙌 Reconhecimento](#-reconhecimento)
 
 :small_blue_diamond: [📄 Licença](#-licença)
 
@@ -144,22 +144,24 @@ Após executar a aplicação, você pode acessar o Swagger UI pela rota `/api-do
 
 Certifique-se de revisar esses documentos para obter mais informações sobre o projeto NoteSwift e para entender como interagir com a API usando o Swagger UI. Eles fornecerão detalhes importantes sobre o escopo, os recursos e os endpoints disponíveis na aplicação.
 
-## 🤝 Equipe
+## 🙌 Reconhecimento
 
 Gostaria de aproveitar este espaço para expressar minha sincera gratidão à jornada que percorri na realização deste projeto:
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/ViniciusGR797">
-        <img src="https://avatars.githubusercontent.com/u/106624536?v=4" width="100px;" alt="Foto do Vinícius"/><br>
-        <sub>
-          <b>Vinícius Gomes Ribeiro</b>
-        </sub>
-      </a>
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/ViniciusGR797">
+          <img src="https://avatars.githubusercontent.com/u/106624536?v=4" width="100px;" alt="Foto do Vinícius"/><br>
+          <sub>
+            <b>Vinícius Gomes Ribeiro</b>
+          </sub>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
 
 Embora tenha sido uma jornada individual, esta realização não teria sido possível sem a dedicação, esforço e comprometimento. Cada etapa deste projeto foi impulsionada pelo empenho e habilidades que empreguei. Agradeço profundamente por esta oportunidade de crescimento e aprendizado.
 
