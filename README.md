@@ -17,7 +17,7 @@
 </div>
 
 <div align="center">
-  <img src="https://cdn.discordapp.com/attachments/1089358473483006105/1139671477684277309/logo_NoteSwift.png" alt="logo HappyFit">
+  <img src="https://cdn.discordapp.com/attachments/1089358473483006105/1139671477684277309/logo_NoteSwift.png?ex=66106cc6&is=65fdf7c6&hm=bb2b64001c59e09c7455d00750278284279c906131588d866addebcc3b7839cd&" alt="logo NoteSwift">
 </div>
 
 > O software proposto tem como objetivo controlar anotações online, com pastas e lixeira. Organize de forma intuitiva, recupere notas excluídas e tenha acesso rápido às informações importantes. Simplifique seu gerenciamento de notas com praticidade e eficiência.
